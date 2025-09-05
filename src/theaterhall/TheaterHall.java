@@ -6,7 +6,6 @@ public class TheaterHall {
 
     private int hallNumber;
     private int capacity;
-
     private Screening[] screenings;
 
     //in theater hall there could be 0 screenings, but it has number of the hall and capacity - which can be 0 also but its mandatory to mention in the constructor.

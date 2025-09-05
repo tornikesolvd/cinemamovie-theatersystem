@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 public class SnackOrder {
 
     private Customer customer;
-
     private Snack[] snacks;
 
     //it is not obligatory to mention who orders snack but essential to have amount of snacks in order to order.

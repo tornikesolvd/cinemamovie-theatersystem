@@ -3,7 +3,6 @@ package identity;
 public class Person {
 
     private String name;
-
     private String email;
 
     //Every person have their own name but not email - the reason why I have mentioned only this field in constructor.

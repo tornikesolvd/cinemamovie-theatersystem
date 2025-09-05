@@ -4,7 +4,6 @@ public class Movie {
 
     private String title;
     private int duration;
-
     private String genre;
 
     //Each movie has title and duration of course that's obligatory - the reason why I have mentioned those fields in constructor.

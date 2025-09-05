@@ -9,7 +9,6 @@ public class Cinema {
     private String name;
     private String location;
     private TheaterHall[] halls;
-
     private Staff[] staffMembers;
     private Customer[] customers;
 

@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 public class Screening {
 
     private TheaterHall theaterHall;
-
     private Movie movie;
     private LocalDateTime time;
     private Ticket[] tickets;

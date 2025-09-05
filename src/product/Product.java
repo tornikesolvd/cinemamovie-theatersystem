@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 public class Product {
 
     private String name;
-
     private BigDecimal price;
 
     //product should have it's own name - what kind of product is it. the price should with default value 0.
