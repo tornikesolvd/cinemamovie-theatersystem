@@ -38,7 +38,7 @@ public class Main {
         Movie movie = new Movie("Tutashkhia", 169);
         movie.setGenre("Drama");
 
-        Screening screening = new Screening(hall1);
+        Screening screening = new Screening();
         screening.setMovie(movie);
         hall1.setScreenings(new Screening[]{screening});
 
