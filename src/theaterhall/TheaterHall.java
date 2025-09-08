@@ -4,7 +4,7 @@ import screening.Screening;
 
 public class TheaterHall {
 
-    private int hallNumber;
+    private Integer hallNumber;
     private int capacity;
     private Screening[] screenings;
 

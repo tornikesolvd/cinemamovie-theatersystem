@@ -1,13 +1,13 @@
 package identity;
 
-public class Staff extends Person{
+public class Staff extends Person {
 
     private String role;
 
     //as staff is Person also it must have name and also specified role.
     public Staff(String name, String role) {
         super(name);
-        this.role=role;
+        this.role = role;
     }
 
     public String getRole() {

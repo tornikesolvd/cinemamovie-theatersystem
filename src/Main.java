@@ -52,7 +52,6 @@ public class Main {
         soda.setPrice(new BigDecimal("3.00"));
 
         SnackOrder order = new SnackOrder(new Snack[]{popcorn, soda});
-        order.setCustomer(customer1);
         order.setSnacks(new Snack[]{popcorn, soda});
         customer1.setOrders(new SnackOrder[]{order});
 
@@ -77,5 +76,5 @@ public class Main {
         System.out.println("Voucher: " + voucher.getName() + " ($" + voucher.getPrice() + ")");
         System.out.println("Snacks: " + popcorn.getName() + " and " + soda.getName());
         System.out.println("BookingService Counter: " + BookingService.getBookingCounter());
-        }
     }
+}
