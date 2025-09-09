@@ -29,4 +29,10 @@ public class Customer extends Person {
     public void setOrders(SnackOrder[] orders) {
         this.orders = orders;
     }
+
+    @Override
+    public String getRoleDescription() {
+        return "Cinema customer";
+    }
 }
+

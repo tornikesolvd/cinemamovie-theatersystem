@@ -1,12 +1,13 @@
 package identity;
 
 
-public class Person {
+import entity.Entity;
 
-    private String name;
-    private String email;
+public abstract class Person extends Entity {
 
-    //Every person have their own name but not email - the reason why I have mentioned only this field in constructor.
+    protected String name;
+    protected String email;
+
     public Person(String name) {
         this.name = name;
     }
@@ -15,11 +16,34 @@ public class Person {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public abstract String getRoleDescription();
+
+    @Override
+    public String toString() {
+        return "Person{name='" + name + "', email='" + email + "'}";
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode() + (name != null ? name.hashCode() : 0);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!super.equals(obj)) return false;
+        if (!(obj instanceof Person person)) return false;
+        return name.equals(person.name);
     }
 }

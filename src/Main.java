@@ -10,14 +10,17 @@ import screening.Screening;
 import service.BookingService;
 import theaterhall.TheaterHall;
 import ticket.Ticket;
+import voucher.Voucher;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
+
         TheaterHall hall1 = new TheaterHall(1, 3);
 
         Cinema cinema = new Cinema("KinoRustaveli", "Tbilisi", new TheaterHall[]{hall1});
@@ -40,28 +43,32 @@ public class Main {
 
         Screening screening = new Screening();
         screening.setMovie(movie);
+        screening.setTime(LocalDateTime.of(2025, 9, 3, 19, 0));
         hall1.setScreenings(new Screening[]{screening});
 
         BookingService bookingService = new BookingService();
         Ticket ticket1 = bookingService.bookTicket(customer1, screening, 1, new BigDecimal("12.50"));
-        Ticket ticket2 = bookingService.bookTicket(customer2, screening, 2, new BigDecimal("15.7"));
+        Ticket ticket2 = bookingService.bookTicket(customer2, screening, 2, new BigDecimal("15.70"));
 
         Snack popcorn = new Snack("Popcorn");
         popcorn.setPrice(new BigDecimal("5.00"));
+
         Snack soda = new Snack("Soda");
         soda.setPrice(new BigDecimal("3.00"));
 
         SnackOrder order = new SnackOrder(new Snack[]{popcorn, soda});
-        order.setSnacks(new Snack[]{popcorn, soda});
         customer1.setOrders(new SnackOrder[]{order});
 
-        Person genericPerson = new Person("Ucnobi Person");
+        Person genericPerson = new Staff("Ucnobi Person", "Unknown role"); // using Person abstract super class
         genericPerson.setEmail("ucnobi@mail.com");
 
-        Product voucher = new Product("Gift Voucher");
+        Product voucher = new Voucher("Gift Voucher");
         voucher.setPrice(new BigDecimal("20.00"));
 
         Ticket directTicket = new Ticket(3, new BigDecimal("15.00"));
+
+        bookingService.printProductPrice(popcorn);
+        bookingService.printProductPrice(voucher);
 
         System.out.println("Cinema: " + cinema.getName() + " (" + cinema.getLocation() + ")");
         System.out.println("Movie: " + movie.getTitle() + " (" + movie.getGenre() + ")");
@@ -78,3 +85,4 @@ public class Main {
         System.out.println("BookingService Counter: " + BookingService.getBookingCounter());
     }
 }
+

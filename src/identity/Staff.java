@@ -4,7 +4,6 @@ public class Staff extends Person {
 
     private String role;
 
-    //as staff is Person also it must have name and also specified role.
     public Staff(String name, String role) {
         super(name);
         this.role = role;
@@ -16,6 +15,11 @@ public class Staff extends Person {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    @Override
+    public String getRoleDescription() {
+        return "Cinema staff: " + role;
     }
 
 }

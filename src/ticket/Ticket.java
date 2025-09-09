@@ -1,8 +1,11 @@
 package ticket;
 
-import java.math.BigDecimal;
+import entity.Entity;
 
-public class Ticket {
+import java.math.BigDecimal;
+import java.util.Objects;
+
+public class Ticket extends Entity {
 
     private static int counter = 1000;
 
@@ -40,5 +43,22 @@ public class Ticket {
 
     public static int getCounter() {
         return counter;
+    }
+
+    @Override
+    public String toString() {
+        return "Ticket{seat=" + seatNumber + ", price=" + price + "}";
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(seatNumber, price);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Ticket ticket)) return false;
+        return Objects.equals(seatNumber, ticket.seatNumber)
+                && Objects.equals(price, ticket.price);
     }
 }

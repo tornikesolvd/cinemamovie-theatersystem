@@ -1,8 +1,9 @@
 package theaterhall;
 
+import entity.Entity;
 import screening.Screening;
 
-public class TheaterHall {
+public class TheaterHall extends Entity {
 
     private Integer hallNumber;
     private int capacity;

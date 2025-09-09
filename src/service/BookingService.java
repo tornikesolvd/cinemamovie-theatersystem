@@ -1,6 +1,7 @@
 package service;
 
 import identity.Customer;
+import product.Product;
 import screening.Screening;
 import ticket.Ticket;
 
@@ -35,5 +36,9 @@ public class BookingService {
 
     public static int getBookingCounter() {
         return bookingCounter;
+    }
+
+    public void printProductPrice(Product product) {
+        System.out.println(product.getName() + " final price: " + product.getFinalPrice());
     }
 }

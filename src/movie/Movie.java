@@ -1,6 +1,10 @@
 package movie;
 
-public class Movie {
+import entity.Entity;
+
+import java.util.Objects;
+
+public class Movie extends Entity {
 
     private String title;
     private Integer duration;
@@ -26,5 +30,22 @@ public class Movie {
 
     public void setGenre(String genre) {
         this.genre = genre;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" + title + ", " + duration + "min, " + genre + "}";
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, duration);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Movie movie)) return false;
+        return Objects.equals(title, movie.title) && duration == movie.duration;
     }
 }

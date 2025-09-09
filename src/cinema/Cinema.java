@@ -1,10 +1,11 @@
 package cinema;
 
+import entity.Entity;
 import identity.Customer;
 import identity.Staff;
 import theaterhall.TheaterHall;
 
-public class Cinema {
+public class Cinema extends Entity {
 
     private String name;
     private String location;

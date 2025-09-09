@@ -2,19 +2,22 @@ package product;
 
 import java.math.BigDecimal;
 
-public class Product {
+public abstract class Product {
 
-    private String name;
-    private BigDecimal price;
+    protected String name;
+    protected BigDecimal price;
 
-    //product should have it's own name - what kind of product is it. the price should with default value 0.
     public Product(String name) {
         this.name = name;
-        this.price = new BigDecimal("0.00");
+        this.price = BigDecimal.ZERO;
     }
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public BigDecimal getPrice() {
@@ -24,4 +27,6 @@ public class Product {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
+
+    public abstract BigDecimal getFinalPrice();
 }
