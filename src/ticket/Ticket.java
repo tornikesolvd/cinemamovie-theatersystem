@@ -47,10 +47,6 @@ public final class Ticket extends Showpiece implements Bookable, Payable {
         return counter;
     }
 
-    public final void printTicketInfo() {
-        System.out.println("Ticket{seat=" + seatNumber + ", price=" + price + "}");
-    }
-
     @Override
     public String toString() {
         return "Ticket{seat=" + seatNumber + ", price=" + price + "}";
@@ -83,5 +79,14 @@ public final class Ticket extends Showpiece implements Bookable, Payable {
     public void book() {
         this.occupied = true;
         System.out.println("Booked ticket seat: " + seatNumber);
+    }
+
+    public boolean processPayment(BigDecimal price) {
+        if (price == null || price.compareTo(BigDecimal.ZERO) <= 0) {
+            System.out.println("Invalid payment amount for seat " + seatNumber);
+            return false;
+        }
+        System.out.println("Processing payment of $" + price + " for ticket at seat " + seatNumber);
+        return true;
     }
 }

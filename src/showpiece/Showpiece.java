@@ -1,5 +1,6 @@
 package showpiece;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -41,6 +42,7 @@ public abstract class Showpiece {
     public abstract boolean isValid();
 
     public abstract String getDisplayname();
+
 
     public String getName() {
         return name;

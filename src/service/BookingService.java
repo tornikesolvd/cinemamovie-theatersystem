@@ -20,20 +20,30 @@ public class BookingService {
     private Payable lastProcessed;
 
     //during booking, customer is main person who books, he also chooses screening and seat where to sit.
-    public Ticket bookTicket(Customer customer, Screening screening, int seatNumber, BigDecimal price) {
-        Ticket ticket = new Ticket(seatNumber, new BigDecimal("0.00"));
-        ticket.setPrice(new BigDecimal("0.00"));
+    public final Ticket bookTicket(Customer customer, Screening screening, int seatNumber, BigDecimal price) {
+        if (screening == null || screening.getMovie() == null) {
+            throw new IllegalArgumentException("Invalid screening or movie.");
+        }
+
+        Ticket ticket = new Ticket(seatNumber, price);
         ticket.setOccupied(true);
+
+        boolean paymentSuccess = ticket.processPayment(price);
+        if (!paymentSuccess) {
+            System.out.println("Payment failed for " + customer.getName() + " at seat " + seatNumber);
+            return null;
+        }
 
         Ticket[] tickets = screening.getTickets();
         if (tickets == null) {
-            tickets = new Ticket[screening.getMovie().getDuration()]; // simplified
+            tickets = new Ticket[screening.getMovie().getDuration()];
         }
         tickets[seatNumber - 1] = ticket;
         screening.setTickets(tickets);
 
         bookingCounter++;
-        System.out.println("Booked seat " + seatNumber + " for " + customer.getName());
+        System.out.println("Booked seat " + seatNumber + " for " + customer.getName() +
+                " ($" + price + ")");
         return ticket;
     }
 
@@ -55,7 +65,7 @@ public class BookingService {
         System.out.println(product.getName() + " final price: " + product.getFinalPrice());
     }
 
-    public static void resetCounter() { // static method
+    public static void resetCounter() {
         bookingCounter = 0;
         System.out.println("Booking counter reset");
     }
