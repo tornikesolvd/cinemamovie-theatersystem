@@ -1,14 +1,14 @@
-package entity;
+package showpiece;
 
 import java.util.Objects;
 
-public abstract class Entity {
+public class Showpiece {
     protected Integer id;
 
-    public Entity() {
+    public Showpiece() {
     }
 
-    public Entity(Integer id) {
+    public Showpiece(Integer id) {
         this.id = id;
     }
 
@@ -28,7 +28,7 @@ public abstract class Entity {
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (!(obj instanceof Entity entity)) return false;
+        if (!(obj instanceof Showpiece entity)) return false;
         return Objects.equals(id, entity.id);
     }
 }

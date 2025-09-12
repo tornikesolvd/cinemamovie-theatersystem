@@ -1,17 +1,20 @@
 package cinema;
 
-import entity.Entity;
+import identity.Person;
+import product.Product;
+import showpiece.Showpiece;
 import identity.Customer;
 import identity.Staff;
 import theaterhall.TheaterHall;
 
-public class Cinema extends Entity {
+public class Cinema extends Showpiece {
 
     private String name;
     private String location;
     private TheaterHall[] halls;
     private Staff[] staffMembers;
     private Customer[] customers;
+    private Product[] products; //super type field
 
     // cinema should have name, location and halls , but not staffmembers or customers.
     public Cinema(String name, String location, TheaterHall[] halls) {
@@ -47,4 +50,14 @@ public class Cinema extends Entity {
     public void setCustomers(Customer[] customers) {
         this.customers = customers;
     }
+
+    public Product[] getProducts() {
+        return products;
+    }
+
+    public void setProducts(Product[] products) {
+        this.products = products;
+    }
+
+
 }

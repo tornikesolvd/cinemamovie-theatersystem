@@ -1,10 +1,11 @@
 package movie;
 
-import entity.Entity;
+
+import showpiece.Showpiece;
 
 import java.util.Objects;
 
-public class Movie extends Entity {
+public class Movie extends Showpiece {
 
     private String title;
     private Integer duration;

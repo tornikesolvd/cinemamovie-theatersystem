@@ -1,13 +1,12 @@
 package screening;
 
-import entity.Entity;
+import showpiece.Showpiece;
 import movie.Movie;
-import theaterhall.TheaterHall;
 import ticket.Ticket;
 
 import java.time.LocalDateTime;
 
-public class Screening extends Entity {
+public class Screening extends Showpiece {
 
     private Movie movie;
     private LocalDateTime time;

@@ -1,11 +1,11 @@
 package ticket;
 
-import entity.Entity;
+import showpiece.Showpiece;
 
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class Ticket extends Entity {
+public class Ticket extends Showpiece {
 
     private static int counter = 1000;
 

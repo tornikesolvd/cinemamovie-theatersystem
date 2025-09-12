@@ -65,6 +65,8 @@ public class Main {
         Product voucher = new Voucher("Gift Voucher");
         voucher.setPrice(new BigDecimal("20.00"));
 
+        cinema.setProducts(new Product[]{voucher});
+
         Ticket directTicket = new Ticket(3, new BigDecimal("15.00"));
 
         bookingService.printProductPrice(popcorn);
@@ -85,4 +87,6 @@ public class Main {
         System.out.println("BookingService Counter: " + BookingService.getBookingCounter());
     }
 }
+
+
 

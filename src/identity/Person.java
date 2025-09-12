@@ -1,9 +1,9 @@
 package identity;
 
 
-import entity.Entity;
+import showpiece.Showpiece;
 
-public abstract class Person extends Entity {
+public abstract class Person extends Showpiece {
 
     protected String name;
     protected String email;

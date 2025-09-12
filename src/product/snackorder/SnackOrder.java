@@ -1,13 +1,12 @@
 package product.snackorder;
 
-import entity.Entity;
-import identity.Customer;
+import showpiece.Showpiece;
 import product.Snack;
 
 import java.math.BigDecimal;
 
 public class SnackOrder extends
-        Entity {
+        Showpiece {
 
     private Snack[] snacks;
 
