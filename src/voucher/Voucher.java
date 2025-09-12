@@ -4,7 +4,7 @@ import product.Product;
 
 import java.math.BigDecimal;
 
-public class Voucher extends Product {
+public final class Voucher extends Product {
     public Voucher(String name) {
         super(name);
     }

@@ -34,5 +34,15 @@ public class Customer extends Person {
     public String getRoleDescription() {
         return "Cinema customer";
     }
+
+    @Override
+    public boolean isValid() {
+        return registrationDate != null && name != null;
+    }
+
+    @Override
+    public String getDisplayname() {
+        return "Customer: " + name + "Registration Date: " + registrationDate;
+    }
 }
 

@@ -1,8 +1,11 @@
 package product;
 
+import contract.Identifiable;
+import contract.Payable;
+
 import java.math.BigDecimal;
 
-public abstract class Product {
+public abstract class Product implements Payable, Identifiable {
 
     protected String name;
     protected BigDecimal price;
@@ -12,6 +15,8 @@ public abstract class Product {
         this.price = BigDecimal.ZERO;
     }
 
+
+    @Override
     public String getName() {
         return name;
     }
@@ -20,6 +25,7 @@ public abstract class Product {
         this.name = name;
     }
 
+    @Override
     public BigDecimal getPrice() {
         return price;
     }

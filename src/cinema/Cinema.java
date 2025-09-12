@@ -23,6 +23,18 @@ public class Cinema extends Showpiece {
         this.halls = halls;
     }
 
+    @Override
+    public boolean isValid() {
+        return name != null && !name.isBlank()
+                && location != null && !location.isBlank()
+                && halls != null && halls.length > 0;
+    }
+
+    @Override
+    public String getDisplayname() {
+        return "Cinema: " + name + " in " + location;
+    }
+
     public String getName() {
         return name;
     }

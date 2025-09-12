@@ -1,12 +1,13 @@
 package screening;
 
+import contract.Schedulable;
 import showpiece.Showpiece;
 import movie.Movie;
 import ticket.Ticket;
 
 import java.time.LocalDateTime;
 
-public class Screening extends Showpiece {
+public class Screening extends Showpiece implements Schedulable {
 
     private Movie movie;
     private LocalDateTime time;
@@ -16,6 +17,7 @@ public class Screening extends Showpiece {
         return movie;
     }
 
+    @Override
     public LocalDateTime getTime() {
         return time;
     }
@@ -34,5 +36,15 @@ public class Screening extends Showpiece {
 
     public void setTime(LocalDateTime time) {
         this.time = time;
+    }
+
+    @Override
+    public boolean isValid() {
+        return true;
+    }
+
+    @Override
+    public String getDisplayname() {
+        return "Movie Screening: " + "Movie: " + movie.getTitle() + "Time: " + time;
     }
 }

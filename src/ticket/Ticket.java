@@ -1,15 +1,17 @@
 package ticket;
 
+import contract.Bookable;
+import contract.Payable;
 import showpiece.Showpiece;
 
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class Ticket extends Showpiece {
+public final class Ticket extends Showpiece implements Bookable, Payable {
 
     private static int counter = 1000;
 
-    private int seatNumber;
+    private final int seatNumber;
     private BigDecimal price;
     private boolean occupied;
 
@@ -45,9 +47,24 @@ public class Ticket extends Showpiece {
         return counter;
     }
 
+    public final void printTicketInfo() {
+        System.out.println("Ticket{seat=" + seatNumber + ", price=" + price + "}");
+    }
+
     @Override
     public String toString() {
         return "Ticket{seat=" + seatNumber + ", price=" + price + "}";
+    }
+
+    @Override
+    public boolean isValid() {
+        return seatNumber > 0
+                && price != null && price.compareTo(BigDecimal.ZERO) > 0;
+    }
+
+    @Override
+    public String getDisplayname() {
+        return "s";
     }
 
     @Override
@@ -60,5 +77,11 @@ public class Ticket extends Showpiece {
         if (!(obj instanceof Ticket ticket)) return false;
         return Objects.equals(seatNumber, ticket.seatNumber)
                 && Objects.equals(price, ticket.price);
+    }
+
+    @Override
+    public void book() {
+        this.occupied = true;
+        System.out.println("Booked ticket seat: " + seatNumber);
     }
 }

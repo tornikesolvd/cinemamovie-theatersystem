@@ -5,8 +5,11 @@ import product.Snack;
 
 import java.math.BigDecimal;
 
-public class SnackOrder extends
-        Showpiece {
+public class SnackOrder extends Showpiece {
+
+    {
+        System.out.println("SnackOrder instance created (instance initializer)");
+    }
 
     private Snack[] snacks;
 
@@ -34,5 +37,15 @@ public class SnackOrder extends
             }
         }
         return total;
+    }
+
+    @Override
+    public boolean isValid() {
+        return snacks != null;
+    }
+
+    @Override
+    public String getDisplayname() {
+        return "Snacks: " + getSnacks().toString();
     }
 }

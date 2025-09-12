@@ -39,6 +39,16 @@ public class Movie extends Showpiece {
     }
 
     @Override
+    public boolean isValid() {
+        return title != null && duration != null && duration > 0;
+    }
+
+    @Override
+    public String getDisplayname() {
+        return "Movie " + title;
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(title, duration);
     }

@@ -1,5 +1,6 @@
 package service;
 
+import contract.Payable;
 import identity.Customer;
 import product.Product;
 import screening.Screening;
@@ -15,6 +16,8 @@ public class BookingService {
         bookingCounter = 0;
         System.out.println("BookingService initialized");
     }
+
+    private Payable lastProcessed;
 
     //during booking, customer is main person who books, he also chooses screening and seat where to sit.
     public Ticket bookTicket(Customer customer, Screening screening, int seatNumber, BigDecimal price) {
@@ -34,6 +37,16 @@ public class BookingService {
         return ticket;
     }
 
+    public void processPayment(Payable payable) {
+        if (payable == null) {
+            System.out.println("Nothing to process");
+            return;
+        }
+        System.out.println("Processing payment: $" + payable.getPrice());
+        this.lastProcessed = payable;
+    }
+
+
     public static int getBookingCounter() {
         return bookingCounter;
     }
@@ -41,4 +54,11 @@ public class BookingService {
     public void printProductPrice(Product product) {
         System.out.println(product.getName() + " final price: " + product.getFinalPrice());
     }
+
+    public static void resetCounter() { // static method
+        bookingCounter = 0;
+        System.out.println("Booking counter reset");
+    }
+
+
 }

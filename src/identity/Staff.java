@@ -22,4 +22,13 @@ public class Staff extends Person {
         return "Cinema staff: " + role;
     }
 
+    @Override
+    public boolean isValid() {
+        return name != null && role != null;
+    }
+
+    @Override
+    public String getDisplayname() {
+        return "Staff " + name + "Role: " + role;
+    }
 }

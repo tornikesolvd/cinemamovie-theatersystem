@@ -31,4 +31,15 @@ public class TheaterHall extends Showpiece {
     public void setScreenings(Screening[] screenings) {
         this.screenings = screenings;
     }
+
+    @Override
+    public boolean isValid() {
+        return hallNumber != null && hallNumber < capacity && hallNumber > 0
+                && capacity > 0;
+    }
+
+    @Override
+    public String getDisplayname() {
+        return "d";
+    }
 }

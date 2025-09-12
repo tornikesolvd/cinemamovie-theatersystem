@@ -1,9 +1,10 @@
 package identity;
 
 
+import contract.Identifiable;
 import showpiece.Showpiece;
 
-public abstract class Person extends Showpiece {
+public abstract class Person extends Showpiece implements Identifiable {
 
     protected String name;
     protected String email;
@@ -12,6 +13,7 @@ public abstract class Person extends Showpiece {
         this.name = name;
     }
 
+    @Override
     public String getName() {
         return name;
     }
