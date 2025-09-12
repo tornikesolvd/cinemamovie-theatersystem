@@ -2,7 +2,7 @@ package showpiece;
 
 import java.util.Objects;
 
-public class Showpiece {
+public abstract class Showpiece {
     protected Integer id;
 
     public Showpiece() {
