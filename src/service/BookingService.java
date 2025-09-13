@@ -5,6 +5,7 @@ import identity.Customer;
 import product.Product;
 import screening.Screening;
 import ticket.Ticket;
+import exception.*;
 
 import java.math.BigDecimal;
 
@@ -20,31 +21,48 @@ public class BookingService {
     private Payable lastProcessed;
 
     //during booking, customer is main person who books, he also chooses screening and seat where to sit.
-    public final Ticket bookTicket(Customer customer, Screening screening, int seatNumber, BigDecimal price) {
-        if (screening == null || screening.getMovie() == null) {
-            throw new IllegalArgumentException("Invalid screening or movie.");
+    public final Ticket bookTicket(Customer customer, Screening screening, int seatNumber, BigDecimal price)
+            throws BookingServiceException {
+        try {
+            if (screening == null || screening.getMovie() == null) {
+                throw new InvalidScreeningException("Invalid screening or movie.");
+            }
+
+            Ticket[] existingTickets = screening.getTickets();
+            if (existingTickets != null && seatNumber <= existingTickets.length &&
+                    existingTickets[seatNumber - 1] != null && existingTickets[seatNumber - 1].isOccupied()) {
+                throw new SeatAlreadyOccupiedException(seatNumber);
+            }
+
+            BigDecimal customerBalance = new BigDecimal("50.00"); // Simulated balance
+            if (price.compareTo(customerBalance) > 0) {
+                throw new InsufficientFundsException(price, customerBalance);
+            }
+
+            Ticket ticket = new Ticket(seatNumber, price);
+            ticket.setOccupied(true);
+
+            boolean paymentSuccess = ticket.processPayment(price);
+            if (!paymentSuccess) {
+                throw new BookingServiceException("bookTicket", "Payment processing failed for " + customer.getName());
+            }
+
+            if (existingTickets == null) {
+                existingTickets = new Ticket[screening.getMovie().getDuration()];
+            }
+            existingTickets[seatNumber - 1] = ticket;
+            screening.setTickets(existingTickets);
+
+            bookingCounter++;
+            System.out.println("Booked seat " + seatNumber + " for " + customer.getName() +
+                    " ($" + price + ")");
+            return ticket;
+        } catch (SeatAlreadyOccupiedException | InvalidScreeningException | InsufficientFundsException e) {
+
+            throw e;
+        } catch (Exception e) {
+            throw new BookingServiceException("bookTicket", "Unexpected error during booking", e);
         }
-
-        Ticket ticket = new Ticket(seatNumber, price);
-        ticket.setOccupied(true);
-
-        boolean paymentSuccess = ticket.processPayment(price);
-        if (!paymentSuccess) {
-            System.out.println("Payment failed for " + customer.getName() + " at seat " + seatNumber);
-            return null;
-        }
-
-        Ticket[] tickets = screening.getTickets();
-        if (tickets == null) {
-            tickets = new Ticket[screening.getMovie().getDuration()];
-        }
-        tickets[seatNumber - 1] = ticket;
-        screening.setTickets(tickets);
-
-        bookingCounter++;
-        System.out.println("Booked seat " + seatNumber + " for " + customer.getName() +
-                " ($" + price + ")");
-        return ticket;
     }
 
     public void processPayment(Payable payable) {

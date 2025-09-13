@@ -6,6 +6,7 @@ import showpiece.Showpiece;
 import identity.Customer;
 import identity.Staff;
 import theaterhall.TheaterHall;
+import exception.CinemaCapacityExceededException;
 
 public class Cinema extends Showpiece {
 
@@ -71,5 +72,42 @@ public class Cinema extends Showpiece {
         this.products = products;
     }
 
+    /**
+     * Add a customer to the cinema, checking capacity limits
+     */
+    public void addCustomer(Customer customer) {
+        if (customer == null) {
+            throw new IllegalArgumentException("Customer cannot be null");
+        }
+
+        Customer[] existingCustomers = this.customers;
+        int currentCount = existingCustomers != null ? existingCustomers.length : 0;
+        int maxCapacity = 100; // Maximum cinema capacity
+
+        if (currentCount >= maxCapacity) {
+            throw new CinemaCapacityExceededException(currentCount, maxCapacity);
+        }
+
+        if (existingCustomers == null) {
+            this.customers = new Customer[]{customer};
+        } else {
+            Customer[] newCustomers = new Customer[existingCustomers.length + 1];
+            System.arraycopy(existingCustomers, 0, newCustomers, 0, existingCustomers.length);
+            newCustomers[existingCustomers.length] = customer;
+            this.customers = newCustomers;
+        }
+    }
+
+    /**
+     * Get total capacity of all theater halls
+     */
+    public int getTotalCapacity() {
+        if (halls == null) return 0;
+        int totalCapacity = 0;
+        for (TheaterHall hall : halls) {
+            totalCapacity += hall.getCapacity();
+        }
+        return totalCapacity;
+    }
 
 }
