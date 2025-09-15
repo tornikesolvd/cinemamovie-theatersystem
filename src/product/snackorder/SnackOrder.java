@@ -31,13 +31,20 @@ public class SnackOrder extends Showpiece {
 
     public BigDecimal calculateTotal() {
         BigDecimal total = BigDecimal.ZERO;
-        if (snacks != null) {
-            for (Snack snack : snacks) {
-                total = total.add(snack.getPrice());
+        try {
+            if (snacks != null) {
+                for (Snack snack : snacks) {
+                    if (snack != null && snack.getPrice() != null) {
+                        total = total.add(snack.getPrice());
+                    }
+                }
             }
+            return total;
+        } finally {
+            System.out.println("SnackOrder total calculated: $" + total);
         }
-        return total;
     }
+
 
     @Override
     public boolean isValid() {

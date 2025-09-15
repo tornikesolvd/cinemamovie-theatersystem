@@ -72,9 +72,7 @@ public class Cinema extends Showpiece {
         this.products = products;
     }
 
-    /**
-     * Add a customer to the cinema, checking capacity limits
-     */
+
     public void addCustomer(Customer customer) {
         if (customer == null) {
             throw new IllegalArgumentException("Customer cannot be null");
@@ -98,9 +96,7 @@ public class Cinema extends Showpiece {
         }
     }
 
-    /**
-     * Get total capacity of all theater halls
-     */
+
     public int getTotalCapacity() {
         if (halls == null) return 0;
         int totalCapacity = 0;

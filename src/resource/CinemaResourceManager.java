@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class CinemaResourceManager implements Closeable {
 
     private final Cinema cinema;
-    private boolean isClosed = false;
+    private boolean closed = false;
 
     public CinemaResourceManager(Cinema cinema) {
         this.cinema = cinema;
@@ -21,7 +21,7 @@ public class CinemaResourceManager implements Closeable {
     }
 
     public void addCustomer(Customer customer) {
-        if (isClosed) {
+        if (closed) {
             throw new IllegalStateException("Resource manager is closed");
         }
 
@@ -37,7 +37,7 @@ public class CinemaResourceManager implements Closeable {
     }
 
     public void addStaff(Staff staff) {
-        if (isClosed) {
+        if (closed) {
             throw new IllegalStateException("Resource manager is closed");
         }
 
@@ -53,7 +53,7 @@ public class CinemaResourceManager implements Closeable {
     }
 
     public void addProduct(Product product) {
-        if (isClosed) {
+        if (closed) {
             throw new IllegalStateException("Resource manager is closed");
         }
 
@@ -70,7 +70,7 @@ public class CinemaResourceManager implements Closeable {
 
 
     public String getCinemaInfo() {
-        if (isClosed) {
+        if (closed) {
             throw new IllegalStateException("Resource manager is closed");
         }
 
@@ -79,7 +79,7 @@ public class CinemaResourceManager implements Closeable {
 
 
     public int getCustomerCount() {
-        if (isClosed) {
+        if (closed) {
             throw new IllegalStateException("Resource manager is closed");
         }
 
@@ -88,7 +88,7 @@ public class CinemaResourceManager implements Closeable {
     }
 
     public int getStaffCount() {
-        if (isClosed) {
+        if (closed) {
             throw new IllegalStateException("Resource manager is closed");
         }
 
@@ -98,7 +98,7 @@ public class CinemaResourceManager implements Closeable {
 
 
     public int getProductCount() {
-        if (isClosed) {
+        if (closed) {
             throw new IllegalStateException("Resource manager is closed");
         }
 
@@ -107,17 +107,17 @@ public class CinemaResourceManager implements Closeable {
     }
 
     public boolean isClosed() {
-        return isClosed;
+        return closed;
     }
 
     @Override
     public void close() throws IOException {
-        if (!isClosed) {
+        if (!closed) {
             System.out.println("Closing CinemaResourceManager for: " + cinema.getName());
             System.out.println("Final counts - Customers: " + getCustomerCount() +
                     ", Staff: " + getStaffCount() +
                     ", Products: " + getProductCount());
-            isClosed = true;
+            closed = true;
         }
     }
 }
