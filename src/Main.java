@@ -128,6 +128,9 @@ public class Main {
         cinema.setProducts(new Product[]{voucher});
 
         Ticket directTicket = new Ticket(3, new BigDecimal("15.00"));
+        System.out.println("Demonstrating processPayment: ");
+
+        bookingService.processPayment(directTicket);
 
         bookingService.printProductPrice(popcorn);
         bookingService.printProductPrice(voucher);
