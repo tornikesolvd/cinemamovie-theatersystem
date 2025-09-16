@@ -10,7 +10,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class CinemaResourceManager implements Closeable {
+public class CinemaResourceManager implements AutoCloseable {
 
     private final Cinema cinema;
     private boolean closed = false;
