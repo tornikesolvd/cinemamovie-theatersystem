@@ -199,6 +199,7 @@ public class Main {
             System.out.println("Iterating map: " + e.getKey().getName() + " -> " + e.getValue().size());
         }
         customerTickets.remove(customer1);
+
         Box<Movie> movieBox = new Box<>(movie);
         System.out.println("Box empty: " + movieBox.isEmpty());
         Pair<String, Integer> pair = new Pair<>("A", 1);
