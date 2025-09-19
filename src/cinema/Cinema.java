@@ -1,12 +1,12 @@
 package cinema;
 
-import identity.Person;
 import product.Product;
 import showpiece.Showpiece;
 import identity.Customer;
 import identity.Staff;
 import theaterhall.TheaterHall;
 import exception.CinemaCapacityExceededException;
+
 import java.util.List;
 import java.util.ArrayList;
 

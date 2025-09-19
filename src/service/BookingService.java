@@ -8,6 +8,8 @@ import ticket.Ticket;
 import exception.*;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.ArrayList;
 
 public class BookingService {
 
@@ -28,9 +30,9 @@ public class BookingService {
                 throw new InvalidScreeningException("Invalid screening or movie.");
             }
 
-            Ticket[] existingTickets = screening.getTickets();
-            if (existingTickets != null && seatNumber <= existingTickets.length &&
-                    existingTickets[seatNumber - 1] != null && existingTickets[seatNumber - 1].isOccupied()) {
+            List<Ticket> existingTickets = screening.getTickets();
+            if (existingTickets != null && seatNumber <= existingTickets.size() &&
+                    existingTickets.get(seatNumber - 1) != null && existingTickets.get(seatNumber - 1).isOccupied()) {
                 throw new SeatAlreadyOccupiedException(seatNumber);
             }
 
@@ -48,9 +50,13 @@ public class BookingService {
             }
 
             if (existingTickets == null) {
-                existingTickets = new Ticket[screening.getMovie().getDuration()];
+                existingTickets = new ArrayList<>();
             }
-            existingTickets[seatNumber - 1] = ticket;
+            int capacity = screening.getMovie().getDuration();
+            while (existingTickets.size() < capacity) {
+                existingTickets.add(null);
+            }
+            existingTickets.set(seatNumber - 1, ticket);
             screening.setTickets(existingTickets);
 
             bookingCounter++;

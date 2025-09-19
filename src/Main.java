@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.io.IOException;
 import java.util.*;
+
 import util.Box;
 import util.Pair;
 
@@ -173,25 +174,24 @@ public class Main {
         System.out.println("Map size: " + customerTickets.size());
         boolean mapEmpty = customerTickets.isEmpty();
         System.out.println("Map empty: " + mapEmpty);
-        List<Customer> customerList = cinema.getCustomers();
-        if (customerList != null && !customerList.isEmpty()) {
-            Customer firstCustomer = customerList.get(0);
+        if (customers != null && !customers.isEmpty()) {
+            Customer firstCustomer = customers.get(0);
             System.out.println("First customer: " + firstCustomer.getName());
         }
-        Set<Screening> screeningSet = hall1.getScreenings();
-        if (screeningSet != null && !screeningSet.isEmpty()) {
-            Screening firstScreening = screeningSet.iterator().next();
+        Set<Screening> screenings = hall1.getScreenings();
+        if (screenings != null && !screenings.isEmpty()) {
+            Screening firstScreening = screenings.iterator().next();
             System.out.println("First screening movie: " + firstScreening.getMovie().getTitle());
         }
         if (!customerTickets.isEmpty()) {
             Map.Entry<Customer, List<Ticket>> firstEntry = customerTickets.entrySet().iterator().next();
             System.out.println("First map key: " + firstEntry.getKey().getName());
         }
-        for (Customer c : customerList) {
+        for (Customer c : customers) {
             System.out.println("Iterating list: " + c.getName());
         }
-        if (screeningSet != null) {
-            for (Screening s : screeningSet) {
+        if (screenings != null) {
+            for (Screening s : screenings) {
                 System.out.println("Iterating set: " + s.getMovie().getTitle());
             }
         }

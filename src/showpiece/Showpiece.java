@@ -1,6 +1,6 @@
 package showpiece;
 
-import java.math.BigDecimal;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -11,7 +11,6 @@ public abstract class Showpiece {
     protected boolean active;
     protected LocalDateTime createdAt;
     protected LocalDateTime updatedAt;
-    protected String createdBy;
     protected String updatedBy;
 
     {

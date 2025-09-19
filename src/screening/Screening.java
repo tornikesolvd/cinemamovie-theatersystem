@@ -6,12 +6,14 @@ import movie.Movie;
 import ticket.Ticket;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Screening extends Showpiece implements Schedulable {
 
     private Movie movie;
     private LocalDateTime time;
-    private Ticket[] tickets;
+    private List<Ticket> tickets;
 
     public Movie getMovie() {
         return movie;
@@ -22,11 +24,11 @@ public class Screening extends Showpiece implements Schedulable {
         return time;
     }
 
-    public Ticket[] getTickets() {
+    public List<Ticket> getTickets() {
         return tickets;
     }
 
-    public void setTickets(Ticket[] tickets) {
+    public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
     }
 

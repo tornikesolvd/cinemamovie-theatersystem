@@ -4,11 +4,10 @@ import cinema.Cinema;
 import identity.Customer;
 import identity.Staff;
 import product.Product;
-import theaterhall.TheaterHall;
 
-import java.io.Closeable;
+
 import java.io.IOException;
-import java.util.Arrays;
+
 import java.util.List;
 import java.util.ArrayList;
 
