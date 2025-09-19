@@ -3,12 +3,14 @@ package theaterhall;
 
 import showpiece.Showpiece;
 import screening.Screening;
+import java.util.Set;
+import java.util.LinkedHashSet;
 
 public class TheaterHall extends Showpiece {
 
     private Integer hallNumber;
     private int capacity;
-    private Screening[] screenings;
+    private Set<Screening> screenings;
 
     //in theater hall there could be 0 screenings, but it has number of the hall and capacity - which can be 0 also but its mandatory to mention in the constructor.
     public TheaterHall(int hallNumber, int capacity) {
@@ -24,12 +26,19 @@ public class TheaterHall extends Showpiece {
         return capacity;
     }
 
-    public Screening[] getScreenings() {
+    public Set<Screening> getScreenings() {
         return screenings;
     }
 
-    public void setScreenings(Screening[] screenings) {
+    public void setScreenings(Set<Screening> screenings) {
         this.screenings = screenings;
+    }
+
+    public void addScreening(Screening screening) {
+        if (this.screenings == null) {
+            this.screenings = new LinkedHashSet<>();
+        }
+        this.screenings.add(screening);
     }
 
     @Override

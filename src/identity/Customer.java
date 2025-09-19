@@ -3,11 +3,12 @@ package identity;
 import product.snackorder.SnackOrder;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Customer extends Person {
 
     private LocalDate registrationDate;
-    private SnackOrder[] orders;
+    private List<SnackOrder> orders;
 
     //as customer is person and extends Person class, therefore customer should have name as obligatory field, but not registration date or orders because customer can not be registered and does not have any orders but stil attend cinema.
     public Customer(String name) {
@@ -22,11 +23,11 @@ public class Customer extends Person {
         this.registrationDate = registrationDate;
     }
 
-    public SnackOrder[] getOrders() {
+    public List<SnackOrder> getOrders() {
         return orders;
     }
 
-    public void setOrders(SnackOrder[] orders) {
+    public void setOrders(List<SnackOrder> orders) {
         this.orders = orders;
     }
 

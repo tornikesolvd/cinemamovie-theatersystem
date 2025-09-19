@@ -4,6 +4,8 @@ import showpiece.Showpiece;
 import product.Snack;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.ArrayList;
 
 public class SnackOrder extends Showpiece {
 
@@ -11,22 +13,22 @@ public class SnackOrder extends Showpiece {
         System.out.println("SnackOrder instance created (instance initializer)");
     }
 
-    private Snack[] snacks;
+    private List<Snack> snacks;
 
-    public SnackOrder(Snack[] snacks) {
+    public SnackOrder(List<Snack> snacks) {
         this.snacks = snacks;
     }
 
-    public Snack[] getSnacks() {
+    public List<Snack> getSnacks() {
         return snacks;
     }
 
-    public void setSnacks(Snack[] snacks) {
+    public void setSnacks(List<Snack> snacks) {
         this.snacks = snacks;
     }
 
     public int getSnackCount() {
-        return snacks == null ? 0 : snacks.length;
+        return snacks == null ? 0 : snacks.size();
     }
 
     public BigDecimal calculateTotal() {

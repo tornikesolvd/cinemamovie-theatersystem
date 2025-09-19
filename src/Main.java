@@ -18,6 +18,9 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.io.IOException;
+import java.util.*;
+import util.Box;
+import util.Pair;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -26,10 +29,14 @@ public class Main {
 
         TheaterHall hall1 = new TheaterHall(1, 3);
 
-        Cinema cinema = new Cinema("KinoRustaveli", "Tbilisi", new TheaterHall[]{hall1});
+        List<TheaterHall> halls = new ArrayList<>();
+        halls.add(hall1);
+        Cinema cinema = new Cinema("KinoRustaveli", "Tbilisi", halls);
 
         Staff staff = new Staff("Aza", "Servant");
-        cinema.setStaffMembers(new Staff[]{staff});
+        List<Staff> staffList = new ArrayList<>();
+        staffList.add(staff);
+        cinema.setStaffMembers(staffList);
 
         Customer customer1 = new Customer("Gio");
         customer1.setEmail("gio@mail.com");
@@ -39,7 +46,10 @@ public class Main {
         customer2.setEmail("toks@mail.com");
         customer2.setRegistrationDate(LocalDate.of(2023, 8, 22));
 
-        cinema.setCustomers(new Customer[]{customer1, customer2});
+        List<Customer> customers = new ArrayList<>();
+        customers.add(customer1);
+        customers.add(customer2);
+        cinema.setCustomers(customers);
 
         Movie movie = new Movie("Tutashkhia", 169);
         movie.setGenre("Drama");
@@ -47,7 +57,7 @@ public class Main {
         Screening screening = new Screening();
         screening.setMovie(movie);
         screening.setTime(LocalDateTime.of(2025, 9, 3, 19, 0));
-        hall1.setScreenings(new Screening[]{screening});
+        hall1.addScreening(screening);
 
         BookingService bookingService = new BookingService();
 
@@ -84,8 +94,13 @@ public class Main {
         Snack soda = new Snack("Soda");
         soda.setPrice(new BigDecimal("3.00"));
 
-        SnackOrder order = new SnackOrder(new Snack[]{popcorn, soda});
-        customer1.setOrders(new SnackOrder[]{order});
+        List<Snack> snackList = new ArrayList<>();
+        snackList.add(popcorn);
+        snackList.add(soda);
+        SnackOrder order = new SnackOrder(snackList);
+        List<SnackOrder> orders1 = new ArrayList<>();
+        orders1.add(order);
+        customer1.setOrders(orders1);
 
         Person genericPerson = new Staff("Ucnobi Person", "Unknown role");
         genericPerson.setEmail("ucnobi@mail.com");
@@ -125,7 +140,9 @@ public class Main {
 
         System.out.println(" Resource manager closed automatically ===");
 
-        cinema.setProducts(new Product[]{voucher});
+        List<Product> products = new ArrayList<>();
+        products.add(voucher);
+        cinema.setProducts(products);
 
         Ticket directTicket = new Ticket(3, new BigDecimal("15.00"));
 
@@ -146,6 +163,43 @@ public class Main {
         System.out.println("Snacks: " + popcorn.getName() + " and " + soda.getName());
         System.out.println("BookingService Counter: " + BookingService.getBookingCounter());
 
+
+        Map<Customer, List<Ticket>> customerTickets = new HashMap<>();
+        customerTickets.put(customer1, new ArrayList<>());
+        customerTickets.get(customer1).add(new Ticket(10, new BigDecimal("11.00")));
+        System.out.println("Map size: " + customerTickets.size());
+        boolean mapEmpty = customerTickets.isEmpty();
+        System.out.println("Map empty: " + mapEmpty);
+        List<Customer> customerList = cinema.getCustomers();
+        if (customerList != null && !customerList.isEmpty()) {
+            Customer firstCustomer = customerList.get(0);
+            System.out.println("First customer: " + firstCustomer.getName());
+        }
+        Set<Screening> screeningSet = hall1.getScreenings();
+        if (screeningSet != null && !screeningSet.isEmpty()) {
+            Screening firstScreening = screeningSet.iterator().next();
+            System.out.println("First screening movie: " + firstScreening.getMovie().getTitle());
+        }
+        if (!customerTickets.isEmpty()) {
+            Map.Entry<Customer, List<Ticket>> firstEntry = customerTickets.entrySet().iterator().next();
+            System.out.println("First map key: " + firstEntry.getKey().getName());
+        }
+        for (Customer c : customerList) {
+            System.out.println("Iterating list: " + c.getName());
+        }
+        if (screeningSet != null) {
+            for (Screening s : screeningSet) {
+                System.out.println("Iterating set: " + s.getMovie().getTitle());
+            }
+        }
+        for (Map.Entry<Customer, List<Ticket>> e : customerTickets.entrySet()) {
+            System.out.println("Iterating map: " + e.getKey().getName() + " -> " + e.getValue().size());
+        }
+        customerTickets.remove(customer1);
+        Box<Movie> movieBox = new Box<>(movie);
+        System.out.println("Box empty: " + movieBox.isEmpty());
+        Pair<String, Integer> pair = new Pair<>("A", 1);
+        System.out.println("Pair: " + pair.getKey() + ":" + pair.getValue());
 
         System.out.println(" Additional Exception Demonstrations ");
 

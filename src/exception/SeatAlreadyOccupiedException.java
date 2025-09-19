@@ -24,3 +24,4 @@ public class SeatAlreadyOccupiedException extends RuntimeException {
     }
 }
 
+
