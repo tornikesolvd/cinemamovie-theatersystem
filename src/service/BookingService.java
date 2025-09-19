@@ -62,6 +62,9 @@ public class BookingService {
             throw e;
         } catch (Exception e) {
             throw new BookingServiceException("bookTicket", "Unexpected error during booking", e);
+        } finally {
+            System.out.println("Booking attempt finished for customer: " +
+                    (customer != null ? customer.getName() : "Unknown"));
         }
     }
 
