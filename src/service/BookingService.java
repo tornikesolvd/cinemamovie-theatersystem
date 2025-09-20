@@ -10,6 +10,9 @@ import exception.*;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.function.Consumer;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public class BookingService {
 
@@ -97,5 +100,48 @@ public class BookingService {
         System.out.println("Booking counter reset");
     }
 
+    // Consumer - Lambda Function
+    public void generateTicketAction(Ticket ticket, Consumer<Ticket> action) {
+        if (ticket != null && action != null) {
+            action.accept(ticket);
+        }
+    }
+
+    public void notifyTicketBooking(Ticket ticket) {
+        generateTicketAction(ticket, t ->
+            System.out.println("Notification: Seat " + t.getSeatNumber() + 
+                             " booked for $" + t.getPrice())
+        );
+    }
+
+    // BiFunction - Lambda Function
+    public BigDecimal calculatePrice(Customer customer, Screening screening, BiFunction<Customer, Screening, BigDecimal> calculator) {
+        if (customer == null || screening == null || calculator == null) {
+            return BigDecimal.ZERO;
+        }
+        return calculator.apply(customer, screening);
+    }
+
+    public BigDecimal getGeneralPrice(Customer customer, Screening screening) {
+        return calculatePrice(customer, screening, (cust, screen) -> new BigDecimal("12.50"));
+    }
+
+    // Custom Lambda Expression #3 - Ticket Validation System
+    public String validateTicket(Ticket ticket, Function<Ticket, String> validator) {
+        if (ticket == null || validator == null) {
+            return "Invalid ticket or validator";
+        }
+        return validator.apply(ticket);
+    }
+
+    public String checkTicketValidity(Ticket ticket) {
+        return validateTicket(ticket, t -> {
+            if (t.getSeatNumber() > 0 && t.getPrice().compareTo(BigDecimal.ZERO) > 0) {
+                return "Ticket is valid for seat " + t.getSeatNumber();
+            } else {
+                return "Ticket is invalid - check seat number and price";
+            }
+        });
+    }
 
 }

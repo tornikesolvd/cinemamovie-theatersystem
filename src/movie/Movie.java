@@ -4,6 +4,8 @@ package movie;
 import showpiece.Showpiece;
 
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class Movie extends Showpiece {
 
@@ -58,5 +60,33 @@ public class Movie extends Showpiece {
         if (this == obj) return true;
         if (!(obj instanceof Movie movie)) return false;
         return Objects.equals(title, movie.title) && duration == movie.duration;
+    }
+
+    public String transformMovie(Function<Movie, String> movieTransform) {
+        return movieTransform.apply(this);
+    }
+
+    public String getFormattedDuration() {
+        int hours = duration / 60;
+        int minutes = duration % 60;
+        if (hours > 0) {
+            return hours + "h " + minutes + "min";
+        } else {
+            return minutes + "min";
+        }
+    }
+
+    public String getShortInfo() {
+        return transformMovie(movie -> 
+            movie.getTitle() + " (" + movie.getFormattedDuration() + ")"
+        );
+    }
+
+    public String checkMovie(Predicate<Movie> ratingCriteria) {
+        if (ratingCriteria.test(this)) {
+            return "This movie meets the criteria!";
+        } else {
+            return "This movie doesn't meet the criteria.";
+        }
     }
 }
