@@ -59,6 +59,7 @@ public enum TicketType {
         return totalTypes;
     }
 
+
     public static TicketType getCheapestType() {
         TicketType cheapest = STANDARD;
         for (TicketType type : values()) {
