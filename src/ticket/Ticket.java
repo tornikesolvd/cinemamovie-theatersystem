@@ -3,6 +3,7 @@ package ticket;
 import contract.Bookable;
 import contract.Payable;
 import showpiece.Showpiece;
+import payment.PaymentMethod;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -14,12 +15,34 @@ public final class Ticket extends Showpiece implements Bookable, Payable {
     private final int seatNumber;
     private BigDecimal price;
     private boolean occupied;
+    private TicketType ticketType;
+    private PaymentMethod paymentMethod;
 
     //ticket must have seatnumber and price mentioned.
     public Ticket(int seatNumber, BigDecimal price) {
         this.seatNumber = seatNumber;
         this.price = price;
         this.occupied = false;
+        this.ticketType = TicketType.STANDARD;
+        this.paymentMethod = PaymentMethod.CASH;
+        counter++;
+    }
+
+    public Ticket(int seatNumber, BigDecimal price, TicketType ticketType) {
+        this.seatNumber = seatNumber;
+        this.price = price;
+        this.occupied = false;
+        this.ticketType = ticketType;
+        this.paymentMethod = PaymentMethod.CASH;
+        counter++;
+    }
+
+    public Ticket(int seatNumber, BigDecimal price, TicketType ticketType, PaymentMethod paymentMethod) {
+        this.seatNumber = seatNumber;
+        this.price = price;
+        this.occupied = false;
+        this.ticketType = ticketType;
+        this.paymentMethod = paymentMethod;
         counter++;
     }
 
@@ -35,12 +58,28 @@ public final class Ticket extends Showpiece implements Bookable, Payable {
         this.price = price;
     }
 
-    public boolean isOccupied() {
+    public boolean occupied() {
         return occupied;
     }
 
     public void setOccupied(boolean occupied) {
         this.occupied = occupied;
+    }
+
+    public TicketType getTicketType() {
+        return ticketType;
+    }
+
+    public void setTicketType(TicketType ticketType) {
+        this.ticketType = ticketType;
+    }
+
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
 
     public static int getCounter() {
@@ -86,7 +125,43 @@ public final class Ticket extends Showpiece implements Bookable, Payable {
             System.out.println("Invalid payment amount for seat " + seatNumber);
             return false;
         }
-        System.out.println("Processing payment of $" + price + " for ticket at seat " + seatNumber);
+        
+        BigDecimal totalAmount = paymentMethod != null ? paymentMethod.getTotalAmount(price) : price;
+        System.out.println("Processing payment of $" + totalAmount + " for ticket at seat " + seatNumber + 
+                         " using " + (paymentMethod != null ? paymentMethod.getMethodName() : "Unknown method"));
+        
+        if (paymentMethod != null && paymentMethod.requiresProcessing()) {
+            System.out.println("Payment processing fee: $" + paymentMethod.calculateFee(price));
+        }
+        
         return true;
+    }
+
+    public BigDecimal calculateFinalPrice() {
+        return ticketType != null ? ticketType.calculateFinalPrice(price) : price;
+    }
+
+    public String getTicketTypeInfo() {
+        return ticketType != null ? ticketType.getPriceInfo() : "Standard: $" + price;
+    }
+
+    public boolean discounted() {
+        return ticketType != null && ticketType.discounted();
+    }
+
+    public boolean premium() {
+        return ticketType != null && ticketType.premium();
+    }
+
+    public String getPaymentMethodInfo() {
+        return paymentMethod != null ? paymentMethod.getDescription() : "No payment method set";
+    }
+
+    public boolean digitalPayment() {
+        return paymentMethod != null && paymentMethod.digital();
+    }
+
+    public boolean traditionalPayment() {
+        return paymentMethod != null && paymentMethod.traditional();
     }
 }

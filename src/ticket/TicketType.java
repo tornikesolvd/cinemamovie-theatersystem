@@ -43,11 +43,11 @@ public enum TicketType {
         return basePrice.multiply(BigDecimal.valueOf(multiplier));
     }
 
-    public boolean isDiscounted() {
+    public boolean discounted() {
         return multiplier < 1.0;
     }
 
-    public boolean isPremium() {
+    public boolean premium() {
         return multiplier > 1.5;
     }
 

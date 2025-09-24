@@ -106,7 +106,7 @@ public class CinemaResourceManager implements AutoCloseable {
         return products != null ? products.size() : 0;
     }
 
-    public boolean isClosed() {
+    public boolean closed() {
         return closed;
     }
 

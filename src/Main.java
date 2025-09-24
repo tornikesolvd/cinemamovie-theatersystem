@@ -2,7 +2,10 @@ import cinema.Cinema;
 import identity.Customer;
 import identity.Person;
 import identity.Staff;
+import identity.StaffRole;
 import movie.Movie;
+import movie.MovieInfo;
+import movie.MovieGenre;
 import product.Product;
 import product.Snack;
 import product.snackorder.SnackOrder;
@@ -10,7 +13,9 @@ import screening.Screening;
 import service.BookingService;
 import theaterhall.TheaterHall;
 import ticket.Ticket;
+import ticket.TicketType;
 import voucher.Voucher;
+import payment.PaymentMethod;
 import resource.CinemaResourceManager;
 import exception.*;
 
@@ -22,6 +27,7 @@ import java.util.*;
 
 import util.Box;
 import util.Pair;
+import contract.CustomerAction;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -34,7 +40,7 @@ public class Main {
         halls.add(hall1);
         Cinema cinema = new Cinema("KinoRustaveli", "Tbilisi", halls);
 
-        Staff staff = new Staff("Aza", "Servant");
+        Staff staff = new Staff("Aza", StaffRole.MANAGER);
         List<Staff> staffList = new ArrayList<>();
         staffList.add(staff);
         cinema.setStaffMembers(staffList);
@@ -53,7 +59,17 @@ public class Main {
         cinema.setCustomers(customers);
 
         Movie movie = new Movie("Tutashkhia", 169);
-        movie.setGenre("Drama");
+        movie.setGenre(MovieGenre.DRAMA);
+        
+        MovieInfo movieInfo = new MovieInfo(
+            "Tutashkhia",
+            "Levan Tutashkhia", 
+            LocalDate.of(2023, 5, 15),
+            169,
+            new BigDecimal("2500000"),
+            "Georgian Film Studio"
+        );
+        movie.setMovieInfo(movieInfo);
 
         Screening screening = new Screening();
         screening.setMovie(movie);
@@ -201,7 +217,7 @@ public class Main {
         customerTickets.remove(customer1);
 
         Box<Movie> movieBox = new Box<>(movie);
-        System.out.println("Box empty: " + movieBox.isEmpty());
+        System.out.println("Box empty: " + movieBox.empty());
         Pair<String, Integer> pair = new Pair<>("A", 1);
         System.out.println("Pair: " + pair.getKey() + ":" + pair.getValue());
 
@@ -232,7 +248,41 @@ public class Main {
             System.err.println("Invalid screening: " + e.getMessage());
         }
 
-        System.out.println(" All demonstrations completed ");
+        System.out.println("Technical Task: Cleaning Theater Hall");
+
+
+        cinema.technicalTask(() -> {
+            System.out.println("Cleaning projectors");
+            System.out.println("Testing sound systems");
+        });
+        
+        cinema.cleanTheaterHall(hall1, () -> {
+            System.out.println("Vacuuming seats");
+            System.out.println("Wiping down surfaces");
+        });
+
+        System.out.println("Customer action: ");
+        
+        cinema.applyCustomerAction((customer) -> {
+            System.out.println("Welcome back, " + customer.getName() + "!");
+            if (customer.getEmail() != null) {
+                System.out.println("Sending promotional email to: " + customer.getEmail());
+            }
+        });
+
+        System.out.println("Full Movie Info: " + movie.getFullMovieInfo());
+
+        System.out.println("Staff member: " + staff.getDisplayname());
+        System.out.println("Role description: " + staff.getRoleDescription());
+        System.out.println("Hourly wage: $" + staff.getHourlyWage());
+
+        System.out.println("Cinema status: " + cinema.getStatusMessage());
+        System.out.println("Requires staff: " + cinema.requiresStaff());
+
+        Ticket vipTicket = new Ticket(10, new BigDecimal("25.00"), TicketType.VIP, PaymentMethod.CREDIT_CARD);
+        System.out.println("VIP Ticket Type Info: " + vipTicket.getTicketTypeInfo());
+        System.out.println("Payment Method Info: " + vipTicket.getPaymentMethodInfo());
+
     }
 }
 

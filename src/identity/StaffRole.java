@@ -54,15 +54,15 @@ public enum StaffRole {
         return calculateDailyWage().multiply(BigDecimal.valueOf(5));
     }
 
-    public boolean isManagement() {
+    public boolean management() {
         return this == MANAGER;
     }
 
-    public boolean isCustomerFacing() {
+    public boolean customerFacing() {
         return this == CASHIER || this == USHER || this == CONCESSION_WORKER;
     }
 
-    public boolean isTechnical() {
+    public boolean technical() {
         return this == TECHNICIAN || this == PROJECTIONIST;
     }
 

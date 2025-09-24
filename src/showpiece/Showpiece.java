@@ -59,7 +59,7 @@ public abstract class Showpiece {
         this.description = description;
     }
 
-    public boolean isActive() {
+    public boolean active() {
         return active;
     }
 

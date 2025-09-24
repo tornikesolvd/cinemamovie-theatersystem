@@ -19,7 +19,7 @@ public class Box<T> {
         this.value = value;
     }
 
-    public boolean isEmpty() {
+    public boolean empty() {
         return value == null;
     }
 }

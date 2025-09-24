@@ -64,11 +64,11 @@ public record MovieInfo(
         return title + " by " + director + " (" + releaseDate.getYear() + ") - " + getFormattedDuration() + " - " + getBudgetFormatted();
     }
 
-    public boolean isHighBudget() {
+    public boolean highBudget() {
         return budget.compareTo(new BigDecimal("100000000")) >= 0;
     }
 
-    public boolean isLowBudget() {
+    public boolean lowBudget() {
         return budget.compareTo(new BigDecimal("1000000")) < 0;
     }
 
@@ -77,8 +77,8 @@ public record MovieInfo(
     }
 
     public String getCategory() {
-        if (isHighBudget()) return "Blockbuster";
-        if (isLowBudget()) return "Indie";
+        if (highBudget()) return "Blockbuster";
+        if (lowBudget()) return "Indie";
         return "Standard";
     }
 }

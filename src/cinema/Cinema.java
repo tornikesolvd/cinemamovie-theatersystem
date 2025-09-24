@@ -9,6 +9,7 @@ import exception.CinemaCapacityExceededException;
 
 import java.util.List;
 import java.util.ArrayList;
+import contract.CustomerAction;
 
 public class Cinema extends Showpiece {
 
@@ -18,12 +19,14 @@ public class Cinema extends Showpiece {
     private List<Staff> staffMembers;
     private List<Customer> customers;
     private List<Product> products;
+    private CinemaStatus status;
 
     // cinema should have name, location and halls , but not staffmembers or customers.
     public Cinema(String name, String location, List<TheaterHall> halls) {
         this.name = name;
         this.location = location;
         this.halls = halls;
+        this.status = CinemaStatus.OPEN;
     }
 
     @Override
@@ -74,6 +77,14 @@ public class Cinema extends Showpiece {
         this.products = products;
     }
 
+    public CinemaStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(CinemaStatus status) {
+        this.status = status;
+    }
+
     public void addCustomer(Customer customer) {
         if (customer == null) {
             throw new IllegalArgumentException("Customer cannot be null");
@@ -100,6 +111,44 @@ public class Cinema extends Showpiece {
             totalCapacity += hall.getCapacity();
         }
         return totalCapacity;
+    }
+
+    public void technicalTask(Runnable maintenanceTask) {
+        System.out.println("Executing maintenance task at " + name);
+        maintenanceTask.run();
+    }
+
+
+    public void cleanTheaterHall(TheaterHall hall, Runnable cleaningTask) {
+        System.out.println("Starting cleaning of hall " + hall.getId() + " at " + name);
+        cleaningTask.run();
+        System.out.println("Cleaning completed for hall " + hall.getId() + " at " + name);
+    }
+
+    public void applyCustomerAction(CustomerAction customerAction) {
+        if (customers != null) {
+            System.out.println("Applying action to " + customers.size() + " customers at " + name);
+            for (Customer customer : customers) {
+                customerAction.execute(customer);
+            }
+        }
+    }
+
+    public boolean canSellTickets() {
+        return status != null && status.canSellTickets();
+    }
+
+    public boolean requiresStaff() {
+        return status != null && status.requiresStaff();
+    }
+
+    public String getStatusMessage() {
+        return status != null ? status.getStatusMessage() : "Status not set";
+    }
+
+    public void changeStatus(CinemaStatus newStatus) {
+        System.out.println("Changing cinema status from " + this.status + " to " + newStatus);
+        this.status = newStatus;
     }
 
 }

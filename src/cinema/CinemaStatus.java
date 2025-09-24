@@ -29,7 +29,7 @@ public enum CinemaStatus {
         return statusName;
     }
 
-    public boolean isOperational() {
+    public boolean operational() {
         return operational;
     }
 
@@ -55,7 +55,7 @@ public enum CinemaStatus {
 
     public static CinemaStatus getOperationalStatus() {
         for (CinemaStatus status : values()) {
-            if (status.isOperational()) {
+            if (status.operational()) {
                 return status;
             }
         }
@@ -64,7 +64,7 @@ public enum CinemaStatus {
 
     public static CinemaStatus getNonOperationalStatus() {
         for (CinemaStatus status : values()) {
-            if (!status.isOperational()) {
+            if (!status.operational()) {
                 return status;
             }
         }

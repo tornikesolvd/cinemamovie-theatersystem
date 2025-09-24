@@ -11,7 +11,8 @@ public class Movie extends Showpiece {
 
     private String title;
     private Integer duration;
-    private String genre;
+    private MovieGenre genre;
+    private MovieInfo movieInfo;
 
     //Each movie has title and duration of course that's obligatory - the reason why I have mentioned those fields in constructor.
     public Movie(String title, int duration) {
@@ -27,12 +28,28 @@ public class Movie extends Showpiece {
         return duration;
     }
 
-    public String getGenre() {
+    public MovieGenre getGenre() {
         return genre;
     }
 
-    public void setGenre(String genre) {
+    public void setGenre(MovieGenre genre) {
         this.genre = genre;
+    }
+
+    public void setGenre(String genreName) {
+        try {
+            this.genre = MovieGenre.valueOf(genreName.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            this.genre = MovieGenre.DRAMA;
+        }
+    }
+
+    public MovieInfo getMovieInfo() {
+        return movieInfo;
+    }
+
+    public void setMovieInfo(MovieInfo movieInfo) {
+        this.movieInfo = movieInfo;
     }
 
     @Override
@@ -88,5 +105,24 @@ public class Movie extends Showpiece {
         } else {
             return "This movie doesn't meet the criteria.";
         }
+    }
+
+    public boolean suitableForAge(int age) {
+        return genre != null && genre.suitableForAge(age);
+    }
+
+    public String getAgeRating() {
+        return genre != null ? genre.getAgeRating() : "UNKNOWN";
+    }
+
+    public String getGenreDescription() {
+        return genre != null ? genre.getDescription() : "No genre set";
+    }
+
+    public String getFullMovieInfo() {
+        if (movieInfo != null) {
+            return movieInfo.getFullInfo();
+        }
+        return getShortInfo() + " - " + getGenreDescription();
     }
 }

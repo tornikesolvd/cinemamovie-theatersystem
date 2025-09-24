@@ -35,7 +35,7 @@ public class BookingService {
 
             List<Ticket> existingTickets = screening.getTickets();
             if (existingTickets != null && seatNumber <= existingTickets.size() &&
-                    existingTickets.get(seatNumber - 1) != null && existingTickets.get(seatNumber - 1).isOccupied()) {
+                    existingTickets.get(seatNumber - 1) != null && existingTickets.get(seatNumber - 1).occupied()) {
                 throw new SeatAlreadyOccupiedException(seatNumber);
             }
 

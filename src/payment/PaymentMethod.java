@@ -53,11 +53,11 @@ public enum PaymentMethod {
         return baseAmount.add(calculateFee(baseAmount));
     }
 
-    public boolean isDigital() {
+    public boolean digital() {
         return this == MOBILE_PAY || this == CRYPTOCURRENCY || this == BANK_TRANSFER;
     }
 
-    public boolean isTraditional() {
+    public boolean traditional() {
         return this == CASH || this == CREDIT_CARD || this == DEBIT_CARD;
     }
 
@@ -89,7 +89,7 @@ public enum PaymentMethod {
         return expensive;
     }
 
-    public boolean isInstantPayment() {
+    public boolean instantPayment() {
         return this == CASH || this == VOUCHER;
     }
 }
