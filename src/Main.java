@@ -66,14 +66,14 @@ public class Main {
 
         Movie movie = new Movie("Tutashkhia", 169);
         movie.setGenre(MovieGenre.DRAMA);
-        
+
         MovieInfo movieInfo = new MovieInfo(
-            "Tutashkhia",
-            "Levan Amilakhvari",
-            LocalDate.of(2023, 5, 15),
-            169,
-            new BigDecimal("2500000"),
-            "Georgian Film Studio"
+                "Tutashkhia",
+                "Levan Amilakhvari",
+                LocalDate.of(2023, 5, 15),
+                169,
+                new BigDecimal("2500000"),
+                "Georgian Film Studio"
         );
         movie.setMovieInfo(movieInfo);
 
@@ -212,13 +212,13 @@ public class Main {
         customers.stream()
                 .map(Customer::getName)
                 .forEach(name -> System.out.println("Iterating list: " + name));
-        
+
         if (screenings != null) {
             screenings.stream()
                     .map(s -> s.getMovie().getTitle())
                     .forEach(title -> System.out.println("Iterating set: " + title));
         }
-        
+
         customerTickets.entrySet().stream()
                 .map(e -> e.getKey().getName() + " -> " + e.getValue().size())
                 .forEach(entry -> System.out.println("Iterating map: " + entry));
@@ -262,14 +262,14 @@ public class Main {
             System.out.println("Cleaning projectors");
             System.out.println("Testing sound systems");
         });
-        
+
         cinema.cleanTheaterHall(hall1, () -> {
             System.out.println("Vacuuming seats");
             System.out.println("Wiping down surfaces");
         });
 
         System.out.println("Customer action: ");
-        
+
         cinema.applyCustomerAction((customer) -> {
             System.out.println("Welcome back, " + customer.getName() + "!");
             if (customer.getEmail() != null) {
@@ -316,9 +316,9 @@ public class Main {
             for (Field declaredField : staffClass.getDeclaredFields()) {
                 if (declaredField.isAnnotationPresent(Validate.class)) {
                     Validate validateAnnotation = declaredField.getAnnotation(Validate.class);
-                    System.out.println("Found @Validate annotation on field: " + declaredField.getName() + 
-                                     " with value: " + validateAnnotation.value() + 
-                                     " (required: " + validateAnnotation.required() + ")");
+                    System.out.println("Found @Validate annotation on field: " + declaredField.getName() +
+                            " with value: " + validateAnnotation.value() +
+                            " (required: " + validateAnnotation.required() + ")");
                 }
             }
 

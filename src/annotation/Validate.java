@@ -9,5 +9,6 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD, ElementType.FIELD})
 public @interface Validate {
     String value() default "";
+
     boolean required() default false;
 }

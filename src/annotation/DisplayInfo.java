@@ -9,7 +9,9 @@ import java.lang.annotation.Target;
 @Target({ElementType.TYPE, ElementType.METHOD, ElementType.FIELD, ElementType.CONSTRUCTOR})
 public @interface DisplayInfo {
     String value() default "";
+
     String description() default "";
+
     boolean visible() default true;
 }
 

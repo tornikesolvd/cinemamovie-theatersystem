@@ -1,6 +1,7 @@
 package identity;
 
 import java.math.BigDecimal;
+
 import annotation.DisplayInfo;
 import annotation.Validate;
 

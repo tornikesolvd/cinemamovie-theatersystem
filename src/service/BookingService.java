@@ -109,8 +109,8 @@ public class BookingService {
 
     public void notifyTicketBooking(Ticket ticket) {
         generateTicketAction(ticket, t ->
-            System.out.println("Notification: Seat " + t.getSeatNumber() + 
-                             " booked for $" + t.getPrice())
+                System.out.println("Notification: Seat " + t.getSeatNumber() +
+                        " booked for $" + t.getPrice())
         );
     }
 

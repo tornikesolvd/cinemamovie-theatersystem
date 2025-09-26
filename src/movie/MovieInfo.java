@@ -4,12 +4,12 @@ import java.time.LocalDate;
 import java.math.BigDecimal;
 
 public record MovieInfo(
-    String title,
-    String director,
-    LocalDate releaseDate,
-    Integer duration,
-    BigDecimal budget,
-    String studio
+        String title,
+        String director,
+        LocalDate releaseDate,
+        Integer duration,
+        BigDecimal budget,
+        String studio
 ) {
     public MovieInfo {
         if (title == null || title.isBlank()) {

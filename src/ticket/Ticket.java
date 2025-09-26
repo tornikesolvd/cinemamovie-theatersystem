@@ -125,15 +125,15 @@ public final class Ticket extends Showpiece implements Bookable, Payable {
             System.out.println("Invalid payment amount for seat " + seatNumber);
             return false;
         }
-        
+
         BigDecimal totalAmount = paymentMethod != null ? paymentMethod.getTotalAmount(price) : price;
-        System.out.println("Processing payment of $" + totalAmount + " for ticket at seat " + seatNumber + 
-                         " using " + (paymentMethod != null ? paymentMethod.getMethodName() : "Unknown method"));
-        
+        System.out.println("Processing payment of $" + totalAmount + " for ticket at seat " + seatNumber +
+                " using " + (paymentMethod != null ? paymentMethod.getMethodName() : "Unknown method"));
+
         if (paymentMethod != null && paymentMethod.requiresProcessing()) {
             System.out.println("Payment processing fee: $" + paymentMethod.calculateFee(price));
         }
-        
+
         return true;
     }
 

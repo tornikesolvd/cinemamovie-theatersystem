@@ -94,8 +94,8 @@ public class Movie extends Showpiece {
     }
 
     public String getShortInfo() {
-        return transformMovie(movie -> 
-            movie.getTitle() + " (" + movie.getFormattedDuration() + ")"
+        return transformMovie(movie ->
+                movie.getTitle() + " (" + movie.getFormattedDuration() + ")"
         );
     }
 

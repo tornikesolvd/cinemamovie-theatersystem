@@ -39,13 +39,13 @@ public class Reflector {
                     System.out.println();
                 });
     }
-    
+
     public static Object createObject(Class<?> clazz, Object... args) {
         try {
             Class<?>[] parameterTypes = Arrays.stream(args)
                     .map(Object::getClass)
                     .toArray(Class[]::new);
-            
+
             Constructor<?> constructor = clazz.getDeclaredConstructor(parameterTypes);
             constructor.setAccessible(true);
             return constructor.newInstance(args);
@@ -54,13 +54,13 @@ public class Reflector {
             return null;
         }
     }
-    
+
     public static Object callMethod(Object obj, String methodName, Object... args) {
         try {
             Class<?>[] parameterTypes = Arrays.stream(args)
                     .map(Object::getClass)
                     .toArray(Class[]::new);
-            
+
             Method method = obj.getClass().getDeclaredMethod(methodName, parameterTypes);
             method.setAccessible(true);
             return method.invoke(obj, args);
@@ -69,5 +69,5 @@ public class Reflector {
             return null;
         }
     }
-    
+
 }
