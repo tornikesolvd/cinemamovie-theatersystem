@@ -1,6 +1,7 @@
 package ticket;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 
 public enum TicketType {
     STANDARD("Standard", new BigDecimal("12.50"), 1.0),
@@ -61,22 +62,14 @@ public enum TicketType {
 
 
     public static TicketType getCheapestType() {
-        TicketType cheapest = STANDARD;
-        for (TicketType type : values()) {
-            if (type.basePrice.compareTo(cheapest.basePrice) < 0) {
-                cheapest = type;
-            }
-        }
-        return cheapest;
+        return Arrays.stream(values())
+                .min((t1, t2) -> t1.basePrice.compareTo(t2.basePrice))
+                .orElse(STANDARD);
     }
 
     public static TicketType getMostExpensiveType() {
-        TicketType expensive = STANDARD;
-        for (TicketType type : values()) {
-            if (type.basePrice.compareTo(expensive.basePrice) > 0) {
-                expensive = type;
-            }
-        }
-        return expensive;
+        return Arrays.stream(values())
+                .max((t1, t2) -> t1.basePrice.compareTo(t2.basePrice))
+                .orElse(STANDARD);
     }
 }

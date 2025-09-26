@@ -1,3 +1,4 @@
+import annotation.Validate;
 import cinema.Cinema;
 import identity.Customer;
 import identity.Person;
@@ -24,9 +25,14 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.io.IOException;
 import java.util.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Constructor;
+import java.util.Arrays;
 
 import util.Box;
 import util.Pair;
+import util.Reflector;
 import contract.CustomerAction;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -63,7 +69,7 @@ public class Main {
         
         MovieInfo movieInfo = new MovieInfo(
             "Tutashkhia",
-            "Levan Tutashkhia", 
+            "Levan Amilakhvari",
             LocalDate.of(2023, 5, 15),
             169,
             new BigDecimal("2500000"),
@@ -203,17 +209,19 @@ public class Main {
             Map.Entry<Customer, List<Ticket>> firstEntry = customerTickets.entrySet().iterator().next();
             System.out.println("First map key: " + firstEntry.getKey().getName());
         }
-        for (Customer c : customers) {
-            System.out.println("Iterating list: " + c.getName());
-        }
+        customers.stream()
+                .map(Customer::getName)
+                .forEach(name -> System.out.println("Iterating list: " + name));
+        
         if (screenings != null) {
-            for (Screening s : screenings) {
-                System.out.println("Iterating set: " + s.getMovie().getTitle());
-            }
+            screenings.stream()
+                    .map(s -> s.getMovie().getTitle())
+                    .forEach(title -> System.out.println("Iterating set: " + title));
         }
-        for (Map.Entry<Customer, List<Ticket>> e : customerTickets.entrySet()) {
-            System.out.println("Iterating map: " + e.getKey().getName() + " -> " + e.getValue().size());
-        }
+        
+        customerTickets.entrySet().stream()
+                .map(e -> e.getKey().getName() + " -> " + e.getValue().size())
+                .forEach(entry -> System.out.println("Iterating map: " + entry));
         customerTickets.remove(customer1);
 
         Box<Movie> movieBox = new Box<>(movie);
@@ -221,7 +229,6 @@ public class Main {
         Pair<String, Integer> pair = new Pair<>("A", 1);
         System.out.println("Pair: " + pair.getKey() + ":" + pair.getValue());
 
-        System.out.println(" Additional Exception Demonstrations ");
 
         try {
             bookingService.bookTicket(customer1, screening, 3, new BigDecimal("100.00"));
@@ -282,6 +289,60 @@ public class Main {
         Ticket vipTicket = new Ticket(10, new BigDecimal("25.00"), TicketType.VIP, PaymentMethod.CREDIT_CARD);
         System.out.println("VIP Ticket Type Info: " + vipTicket.getTicketTypeInfo());
         System.out.println("Payment Method Info: " + vipTicket.getPaymentMethodInfo());
+
+        System.out.println("Reflection ");
+
+        String staffClassName = "identity.Staff";
+        try {
+            Class<Staff> staffClass = (Class<Staff>) Class.forName(staffClassName);
+
+            for (Field declaredField : staffClass.getDeclaredFields()) {
+                System.out.println("Field: " + declaredField.getName());
+            }
+
+            for (Method declaredMethod : staffClass.getDeclaredMethods()) {
+                System.out.println("Method: " + declaredMethod.getName());
+            }
+
+            Constructor<Staff> staffConstructor = staffClass.getDeclaredConstructor(String.class, StaffRole.class);
+            Staff staffReflection = staffConstructor.newInstance("Cashier Cashier", StaffRole.CASHIER);
+            System.out.println("Created staff using reflection: " + staffReflection);
+
+            Method getHourlyWageMethod = staffClass.getDeclaredMethod("getHourlyWage");
+            Object wage = getHourlyWageMethod.invoke(staffReflection);
+            System.out.println("getHourlyWage using reflection: " + wage);
+
+
+            for (Field declaredField : staffClass.getDeclaredFields()) {
+                if (declaredField.isAnnotationPresent(Validate.class)) {
+                    Validate validateAnnotation = declaredField.getAnnotation(Validate.class);
+                    System.out.println("Found @Validate annotation on field: " + declaredField.getName() + 
+                                     " with value: " + validateAnnotation.value() + 
+                                     " (required: " + validateAnnotation.required() + ")");
+                }
+            }
+
+            System.out.println();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+
+        System.out.println("Streaming Operations");
+
+        try (CinemaResourceManager resourceManager = new CinemaResourceManager(cinema)) {
+
+            resourceManager.addCustomer(customer1);
+            resourceManager.addCustomer(customer2);
+            resourceManager.addStaff(staff);
+
+            System.out.println("All customers names: " + resourceManager.getAllCustomerNames());
+            System.out.println("Customers with email: " + resourceManager.getCustomersWithEmail().size());
+            System.out.println("Staff by role: " + resourceManager.getStaffByRole(StaffRole.CASHIER).size());
+            System.out.println("Customer count by domain: " + resourceManager.getCustomerCountByDomain());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 }

@@ -1,9 +1,13 @@
 package identity;
 
 import java.math.BigDecimal;
+import annotation.DisplayInfo;
+import annotation.Validate;
 
+@DisplayInfo(value = "Staff Member", description = "Cinema staff member with specific role")
 public class Staff extends Person {
 
+    @Validate(required = true)
     private StaffRole role;
 
     public Staff(String name, StaffRole role) {
@@ -41,6 +45,8 @@ public class Staff extends Person {
         return role != null ? role.getResponsibilities() : "No role assigned";
     }
 
+    @DisplayInfo(value = "Hourly Wage", description = "Calculates the hourly wage for this staff member")
+    @Validate("wage_calculation")
     public BigDecimal getHourlyWage() {
         return role != null ? role.getHourlyWage() : BigDecimal.ZERO;
     }

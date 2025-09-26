@@ -54,21 +54,17 @@ public enum CinemaStatus {
     }
 
     public static CinemaStatus getOperationalStatus() {
-        for (CinemaStatus status : values()) {
-            if (status.operational()) {
-                return status;
-            }
-        }
-        return CLOSED;
+        return java.util.Arrays.stream(values())
+                .filter(CinemaStatus::operational)
+                .findFirst()
+                .orElse(CLOSED);
     }
 
     public static CinemaStatus getNonOperationalStatus() {
-        for (CinemaStatus status : values()) {
-            if (!status.operational()) {
-                return status;
-            }
-        }
-        return OPEN;
+        return java.util.Arrays.stream(values())
+                .filter(status -> !status.operational())
+                .findFirst()
+                .orElse(OPEN);
     }
 
     public CinemaStatus getNextStatus() {

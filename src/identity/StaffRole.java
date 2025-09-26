@@ -1,6 +1,7 @@
 package identity;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 
 public enum StaffRole {
     MANAGER("Manager", new BigDecimal("25.00"), 8, "Oversees cinema operations"),
@@ -75,23 +76,15 @@ public enum StaffRole {
     }
 
     public static StaffRole getHighestPaidRole() {
-        StaffRole highest = MANAGER;
-        for (StaffRole role : values()) {
-            if (role.hourlyWage.compareTo(highest.hourlyWage) > 0) {
-                highest = role;
-            }
-        }
-        return highest;
+        return Arrays.stream(values())
+                .max((r1, r2) -> r1.hourlyWage.compareTo(r2.hourlyWage))
+                .orElse(MANAGER);
     }
 
     public static StaffRole getLowestPaidRole() {
-        StaffRole lowest = MANAGER;
-        for (StaffRole role : values()) {
-            if (role.hourlyWage.compareTo(lowest.hourlyWage) < 0) {
-                lowest = role;
-            }
-        }
-        return lowest;
+        return Arrays.stream(values())
+                .min((r1, r2) -> r1.hourlyWage.compareTo(r2.hourlyWage))
+                .orElse(MANAGER);
     }
 
     public boolean requiresSpecialTraining() {

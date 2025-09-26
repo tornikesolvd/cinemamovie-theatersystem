@@ -1,5 +1,7 @@
 package movie;
 
+import java.util.Arrays;
+
 public enum MovieGenre {
     ACTION("Action", 15, "High energy films"),
     COMEDY("Comedy", 12, "Funny entertainment"),
@@ -54,12 +56,10 @@ public enum MovieGenre {
     }
 
     public static MovieGenre getGenreByAge(int age) {
-        for (MovieGenre genre : values()) {
-            if (genre.suitableForAge(age)) {
-                return genre;
-            }
-        }
-        return COMEDY;
+        return Arrays.stream(values())
+                .filter(genre -> genre.suitableForAge(age))
+                .findFirst()
+                .orElse(COMEDY);
     }
 
     public String getFullInfo() {

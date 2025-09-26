@@ -1,6 +1,7 @@
 package payment;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 
 public enum PaymentMethod {
     CASH("Cash", 0.0, true, "Physical currency"),
@@ -70,23 +71,15 @@ public enum PaymentMethod {
     }
 
     public static PaymentMethod getCheapestMethod() {
-        PaymentMethod cheapest = CASH;
-        for (PaymentMethod method : values()) {
-            if (method.feePercentage < cheapest.feePercentage) {
-                cheapest = method;
-            }
-        }
-        return cheapest;
+        return Arrays.stream(values())
+                .min((m1, m2) -> Double.compare(m1.feePercentage, m2.feePercentage))
+                .orElse(CASH);
     }
 
     public static PaymentMethod getMostExpensiveMethod() {
-        PaymentMethod expensive = CASH;
-        for (PaymentMethod method : values()) {
-            if (method.feePercentage > expensive.feePercentage) {
-                expensive = method;
-            }
-        }
-        return expensive;
+        return Arrays.stream(values())
+                .max((m1, m2) -> Double.compare(m1.feePercentage, m2.feePercentage))
+                .orElse(CASH);
     }
 
     public boolean instantPayment() {

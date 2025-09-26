@@ -106,11 +106,9 @@ public class Cinema extends Showpiece {
 
     public int getTotalCapacity() {
         if (halls == null) return 0;
-        int totalCapacity = 0;
-        for (TheaterHall hall : halls) {
-            totalCapacity += hall.getCapacity();
-        }
-        return totalCapacity;
+        return halls.stream()
+                .mapToInt(TheaterHall::getCapacity)
+                .sum();
     }
 
     public void technicalTask(Runnable maintenanceTask) {
@@ -128,9 +126,8 @@ public class Cinema extends Showpiece {
     public void applyCustomerAction(CustomerAction customerAction) {
         if (customers != null) {
             System.out.println("Applying action to " + customers.size() + " customers at " + name);
-            for (Customer customer : customers) {
-                customerAction.execute(customer);
-            }
+            customers.stream()
+                    .forEach(customerAction::execute);
         }
     }
 

@@ -3,15 +3,19 @@ package resource;
 import cinema.Cinema;
 import identity.Customer;
 import identity.Staff;
+import identity.StaffRole;
 import product.Product;
 import product.Snack;
 
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.function.Consumer;
@@ -122,14 +126,9 @@ public class CinemaResourceManager implements AutoCloseable {
             return new ArrayList<>();
         }
 
-        List<Customer> filteredCustomers = new ArrayList<>();
-        for (Customer customer : customers) {
-            if (filter.test(customer)) {
-                filteredCustomers.add(customer);
-            }
-        }
-
-        return filteredCustomers;
+        return customers.stream()
+                .filter(filter)
+                .collect(java.util.stream.Collectors.toList());
     }
 
     public List<Customer> getLateCustomers(LocalDate date) {
@@ -144,6 +143,89 @@ public class CinemaResourceManager implements AutoCloseable {
             customer.getEmail() != null && 
             customer.getEmail().endsWith("@" + domain)
         );
+    }
+
+    // Additional streaming operations for collections
+    public List<String> getAllCustomerNames() {
+        if (closed) {
+            throw new IllegalStateException("Resource manager is closed");
+        }
+        
+        List<Customer> customers = cinema.getCustomers();
+        if (customers == null) {
+            return new ArrayList<>();
+        }
+        
+        return customers.stream()
+                .map(Customer::getName)
+                .filter(name -> name != null && !name.isEmpty())
+                .collect(java.util.stream.Collectors.toList());
+    }
+
+    public List<Customer> getCustomersWithEmail() {
+        if (closed) {
+            throw new IllegalStateException("Resource manager is closed");
+        }
+        
+        List<Customer> customers = cinema.getCustomers();
+        if (customers == null) {
+            return new ArrayList<>();
+        }
+        
+        return customers.stream()
+                .filter(customer -> customer.getEmail() != null && !customer.getEmail().isEmpty())
+                .collect(java.util.stream.Collectors.toList());
+    }
+
+    public List<Staff> getStaffByRole(StaffRole role) {
+        if (closed) {
+            throw new IllegalStateException("Resource manager is closed");
+        }
+        
+        List<Staff> staff = cinema.getStaffMembers();
+        if (staff == null) {
+            return new ArrayList<>();
+        }
+        
+        return staff.stream()
+                .filter(member -> member.getRole() == role)
+                .collect(java.util.stream.Collectors.toList());
+    }
+
+    public List<Product> getProductsByPriceRange(BigDecimal minPrice, BigDecimal maxPrice) {
+        if (closed) {
+            throw new IllegalStateException("Resource manager is closed");
+        }
+        
+        List<Product> products = cinema.getProducts();
+        if (products == null) {
+            return new ArrayList<>();
+        }
+        
+        return products.stream()
+                .filter(product -> product.getPrice() != null)
+                .filter(product -> product.getPrice().compareTo(minPrice) >= 0)
+                .filter(product -> product.getPrice().compareTo(maxPrice) <= 0)
+                .collect(java.util.stream.Collectors.toList());
+    }
+
+    public Map<String, Long> getCustomerCountByDomain() {
+        if (closed) {
+            throw new IllegalStateException("Resource manager is closed");
+        }
+        
+        List<Customer> customers = cinema.getCustomers();
+        if (customers == null) {
+            return new HashMap<>();
+        }
+        
+        return customers.stream()
+                .filter(customer -> customer.getEmail() != null && customer.getEmail().contains("@"))
+                .map(customer -> customer.getEmail().substring(customer.getEmail().indexOf("@") + 1))
+                .collect(java.util.stream.Collectors.groupingBy(
+                    domain -> domain,
+                    java.util.stream.Collectors.counting()
+                ));
     }
 
 
@@ -162,7 +244,6 @@ public class CinemaResourceManager implements AutoCloseable {
         });
     }
 
-    // Custom Lambda Expression #2 - Cinema Operations
     public void performCinemaOperation(Consumer<Cinema> operation) {
         if (closed) {
             throw new IllegalStateException("Resource manager is closed");
@@ -176,7 +257,6 @@ public class CinemaResourceManager implements AutoCloseable {
             System.out.println("Name: " + cinema.getName());
             System.out.println("Location: " + cinema.getLocation());
             System.out.println("Total Capacity: " + cinema.getTotalCapacity());
-            System.out.println("====================");
         });
     }
 
