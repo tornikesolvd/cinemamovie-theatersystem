@@ -13,10 +13,6 @@ public enum StaffRole {
     CONCESSION_WORKER("Concession Worker", new BigDecimal("13.00"), 4, "Sells snacks and drinks"),
     PROJECTIONIST("Projectionist", new BigDecimal("16.00"), 6, "Manages movie projection");
 
-    private final String roleName;
-    private final BigDecimal hourlyWage;
-    private final int maxHoursPerDay;
-    private final String responsibilities;
     private static int totalRoles = 0;
 
     static {
@@ -24,11 +20,32 @@ public enum StaffRole {
         System.out.println("StaffRole enum initialized with " + totalRoles + " roles");
     }
 
+    private final String roleName;
+    private final BigDecimal hourlyWage;
+    private final int maxHoursPerDay;
+    private final String responsibilities;
+
     StaffRole(String roleName, BigDecimal hourlyWage, int maxHoursPerDay, String responsibilities) {
         this.roleName = roleName;
         this.hourlyWage = hourlyWage;
         this.maxHoursPerDay = maxHoursPerDay;
         this.responsibilities = responsibilities;
+    }
+
+    public static int getTotalRoles() {
+        return totalRoles;
+    }
+
+    public static StaffRole getHighestPaidRole() {
+        return Arrays.stream(values())
+                .max((r1, r2) -> r1.hourlyWage.compareTo(r2.hourlyWage))
+                .orElse(MANAGER);
+    }
+
+    public static StaffRole getLowestPaidRole() {
+        return Arrays.stream(values())
+                .min((r1, r2) -> r1.hourlyWage.compareTo(r2.hourlyWage))
+                .orElse(MANAGER);
     }
 
     public String getRoleName() {
@@ -69,22 +86,6 @@ public enum StaffRole {
 
     public String getRoleInfo() {
         return roleName + " - $" + hourlyWage + "/hour (" + maxHoursPerDay + "h max)";
-    }
-
-    public static int getTotalRoles() {
-        return totalRoles;
-    }
-
-    public static StaffRole getHighestPaidRole() {
-        return Arrays.stream(values())
-                .max((r1, r2) -> r1.hourlyWage.compareTo(r2.hourlyWage))
-                .orElse(MANAGER);
-    }
-
-    public static StaffRole getLowestPaidRole() {
-        return Arrays.stream(values())
-                .min((r1, r2) -> r1.hourlyWage.compareTo(r2.hourlyWage))
-                .orElse(MANAGER);
     }
 
     public boolean requiresSpecialTraining() {

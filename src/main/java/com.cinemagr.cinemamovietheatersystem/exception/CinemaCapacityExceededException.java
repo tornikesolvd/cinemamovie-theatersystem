@@ -1,4 +1,5 @@
 package com.cinemagr.cinemamovietheatersystem.exception;
+
 public class CinemaCapacityExceededException extends RuntimeException {
 
     private final int currentCapacity;

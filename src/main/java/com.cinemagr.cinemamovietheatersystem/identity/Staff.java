@@ -1,9 +1,9 @@
 package com.cinemagr.cinemamovietheatersystem.identity;
 
-import java.math.BigDecimal;
-
 import com.cinemagr.cinemamovietheatersystem.annotation.DisplayInfo;
 import com.cinemagr.cinemamovietheatersystem.annotation.Validate;
+
+import java.math.BigDecimal;
 
 @DisplayInfo(value = "Staff Member", description = "Cinema staff member with specific role")
 public class Staff extends Person {

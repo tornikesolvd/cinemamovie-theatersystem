@@ -1,11 +1,9 @@
-package  com.cinemagr.cinemamovietheatersystem.ticket;
+package com.cinemagr.cinemamovietheatersystem.ticket;
 
-import  com.cinemagr.cinemamovietheatersystem.contract.Bookable;
-import  com.cinemagr.cinemamovietheatersystem.contract.Payable;
-import  com.cinemagr.cinemamovietheatersystem.showpiece.Showpiece;
-import  com.cinemagr.cinemamovietheatersystem.payment.PaymentMethod;
-import com.cinemagr.cinemamovietheatersystem.ticket.Ticket;
-
+import com.cinemagr.cinemamovietheatersystem.contract.Bookable;
+import com.cinemagr.cinemamovietheatersystem.contract.Payable;
+import com.cinemagr.cinemamovietheatersystem.payment.PaymentMethod;
+import com.cinemagr.cinemamovietheatersystem.showpiece.Showpiece;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -48,6 +46,10 @@ public final class Ticket extends Showpiece implements Bookable, Payable {
         counter++;
     }
 
+    public static int getCounter() {
+        return counter;
+    }
+
     public int getSeatNumber() {
         return seatNumber;
     }
@@ -82,10 +84,6 @@ public final class Ticket extends Showpiece implements Bookable, Payable {
 
     public void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
-    }
-
-    public static int getCounter() {
-        return counter;
     }
 
     @Override

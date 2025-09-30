@@ -12,9 +12,6 @@ public enum TicketType {
     PREMIUM("Premium", new BigDecimal("35.00"), 2.0),
     MATINEE("Matinee", new BigDecimal("9.00"), 0.9);
 
-    private final String typeName;
-    private final BigDecimal basePrice;
-    private final double multiplier;
     private static int totalTypes = 0;
 
     static {
@@ -22,10 +19,30 @@ public enum TicketType {
         System.out.println("TicketType enum initialized with " + totalTypes + " types");
     }
 
+    private final String typeName;
+    private final BigDecimal basePrice;
+    private final double multiplier;
+
     TicketType(String typeName, BigDecimal basePrice, double multiplier) {
         this.typeName = typeName;
         this.basePrice = basePrice;
         this.multiplier = multiplier;
+    }
+
+    public static int getTotalTypes() {
+        return totalTypes;
+    }
+
+    public static TicketType getCheapestType() {
+        return Arrays.stream(values())
+                .min((t1, t2) -> t1.basePrice.compareTo(t2.basePrice))
+                .orElse(STANDARD);
+    }
+
+    public static TicketType getMostExpensiveType() {
+        return Arrays.stream(values())
+                .max((t1, t2) -> t1.basePrice.compareTo(t2.basePrice))
+                .orElse(STANDARD);
     }
 
     public String getTypeName() {
@@ -54,22 +71,5 @@ public enum TicketType {
 
     public String getPriceInfo() {
         return typeName + ": $" + basePrice + " (x" + multiplier + ")";
-    }
-
-    public static int getTotalTypes() {
-        return totalTypes;
-    }
-
-
-    public static TicketType getCheapestType() {
-        return Arrays.stream(values())
-                .min((t1, t2) -> t1.basePrice.compareTo(t2.basePrice))
-                .orElse(STANDARD);
-    }
-
-    public static TicketType getMostExpensiveType() {
-        return Arrays.stream(values())
-                .max((t1, t2) -> t1.basePrice.compareTo(t2.basePrice))
-                .orElse(STANDARD);
     }
 }

@@ -10,14 +10,10 @@ import com.cinemagr.cinemamovietheatersystem.product.Snack;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-import java.util.function.Consumer;
 
 public class CinemaResourceManager implements AutoCloseable {
 

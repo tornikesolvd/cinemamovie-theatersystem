@@ -1,4 +1,5 @@
 package com.cinemagr.cinemamovietheatersystem.movie;
+
 import java.util.Arrays;
 
 public enum MovieGenre {
@@ -11,9 +12,6 @@ public enum MovieGenre {
     THRILLER("Thriller", 16, "Suspenseful plots"),
     ANIMATION("Animation", 6, "Animated features");
 
-    private final String displayName;
-    private final int minimumAge;
-    private final String description;
     private static int totalGenres = 0;
 
     static {
@@ -21,10 +19,25 @@ public enum MovieGenre {
         System.out.println("MovieGenre enum initialized with " + totalGenres + " genres");
     }
 
+    private final String displayName;
+    private final int minimumAge;
+    private final String description;
+
     MovieGenre(String displayName, int minimumAge, String description) {
         this.displayName = displayName;
         this.minimumAge = minimumAge;
         this.description = description;
+    }
+
+    public static int getTotalGenres() {
+        return totalGenres;
+    }
+
+    public static MovieGenre getGenreByAge(int age) {
+        return Arrays.stream(values())
+                .filter(genre -> genre.suitableForAge(age))
+                .findFirst()
+                .orElse(COMEDY);
     }
 
     public String getDisplayName() {
@@ -48,17 +61,6 @@ public enum MovieGenre {
         if (minimumAge >= 16) return "FROM-16";
         if (minimumAge >= 13) return "FROM-13";
         return "FROM TYPE";
-    }
-
-    public static int getTotalGenres() {
-        return totalGenres;
-    }
-
-    public static MovieGenre getGenreByAge(int age) {
-        return Arrays.stream(values())
-                .filter(genre -> genre.suitableForAge(age))
-                .findFirst()
-                .orElse(COMEDY);
     }
 
     public String getFullInfo() {

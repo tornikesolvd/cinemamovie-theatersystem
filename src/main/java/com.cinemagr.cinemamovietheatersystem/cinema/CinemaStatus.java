@@ -9,9 +9,6 @@ public enum CinemaStatus {
     RENOVATION("Renovation", false, "Cinema is being renovated"),
     SPECIAL_EVENT("Special Event", true, "Cinema is hosting special event");
 
-    private final String statusName;
-    private final boolean operational;
-    private final String description;
     private static int totalStatuses = 0;
 
     static {
@@ -19,10 +16,32 @@ public enum CinemaStatus {
         System.out.println("CinemaStatus enum initialized with " + totalStatuses + " statuses");
     }
 
+    private final String statusName;
+    private final boolean operational;
+    private final String description;
+
     CinemaStatus(String statusName, boolean operational, String description) {
         this.statusName = statusName;
         this.operational = operational;
         this.description = description;
+    }
+
+    public static int getTotalStatuses() {
+        return totalStatuses;
+    }
+
+    public static CinemaStatus getOperationalStatus() {
+        return java.util.Arrays.stream(values())
+                .filter(CinemaStatus::operational)
+                .findFirst()
+                .orElse(CLOSED);
+    }
+
+    public static CinemaStatus getNonOperationalStatus() {
+        return java.util.Arrays.stream(values())
+                .filter(status -> !status.operational())
+                .findFirst()
+                .orElse(OPEN);
     }
 
     public String getStatusName() {
@@ -47,24 +66,6 @@ public enum CinemaStatus {
 
     public String getStatusMessage() {
         return "Cinema Status: " + statusName + " - " + description;
-    }
-
-    public static int getTotalStatuses() {
-        return totalStatuses;
-    }
-
-    public static CinemaStatus getOperationalStatus() {
-        return java.util.Arrays.stream(values())
-                .filter(CinemaStatus::operational)
-                .findFirst()
-                .orElse(CLOSED);
-    }
-
-    public static CinemaStatus getNonOperationalStatus() {
-        return java.util.Arrays.stream(values())
-                .filter(status -> !status.operational())
-                .findFirst()
-                .orElse(OPEN);
     }
 
     public CinemaStatus getNextStatus() {

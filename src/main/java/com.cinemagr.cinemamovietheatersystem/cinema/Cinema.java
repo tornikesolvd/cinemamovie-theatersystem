@@ -1,15 +1,15 @@
 package com.cinemagr.cinemamovietheatersystem.cinema;
 
-import com.cinemagr.cinemamovietheatersystem.product.Product;
-import com.cinemagr.cinemamovietheatersystem.showpiece.Showpiece;
+import com.cinemagr.cinemamovietheatersystem.contract.CustomerAction;
+import com.cinemagr.cinemamovietheatersystem.exception.CinemaCapacityExceededException;
 import com.cinemagr.cinemamovietheatersystem.identity.Customer;
 import com.cinemagr.cinemamovietheatersystem.identity.Staff;
+import com.cinemagr.cinemamovietheatersystem.product.Product;
+import com.cinemagr.cinemamovietheatersystem.showpiece.Showpiece;
 import com.cinemagr.cinemamovietheatersystem.theaterhall.TheaterHall;
-import com.cinemagr.cinemamovietheatersystem.exception.CinemaCapacityExceededException;
-import com.cinemagr.cinemamovietheatersystem.contract.CustomerAction;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Cinema extends Showpiece {

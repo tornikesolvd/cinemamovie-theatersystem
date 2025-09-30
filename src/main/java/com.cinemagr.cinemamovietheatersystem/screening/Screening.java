@@ -1,13 +1,12 @@
 package com.cinemagr.cinemamovietheatersystem.screening;
 
 import com.cinemagr.cinemamovietheatersystem.contract.Schedulable;
-import com.cinemagr.cinemamovietheatersystem.ticket.Ticket;
-import com.cinemagr.cinemamovietheatersystem.showpiece.Showpiece;
 import com.cinemagr.cinemamovietheatersystem.movie.Movie;
+import com.cinemagr.cinemamovietheatersystem.showpiece.Showpiece;
+import com.cinemagr.cinemamovietheatersystem.ticket.Ticket;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.ArrayList;
 
 public class Screening extends Showpiece implements Schedulable {
 
@@ -19,9 +18,17 @@ public class Screening extends Showpiece implements Schedulable {
         return movie;
     }
 
+    public void setMovie(Movie movie) {
+        this.movie = movie;
+    }
+
     @Override
     public LocalDateTime getTime() {
         return time;
+    }
+
+    public void setTime(LocalDateTime time) {
+        this.time = time;
     }
 
     public List<Ticket> getTickets() {
@@ -30,14 +37,6 @@ public class Screening extends Showpiece implements Schedulable {
 
     public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
-    }
-
-    public void setMovie(Movie movie) {
-        this.movie = movie;
-    }
-
-    public void setTime(LocalDateTime time) {
-        this.time = time;
     }
 
     @Override

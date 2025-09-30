@@ -1,7 +1,7 @@
 package com.cinemagr.cinemamovietheatersystem.movie;
 
-import java.time.LocalDate;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public record MovieInfo(
         String title,

@@ -1,11 +1,11 @@
-package  com.cinemagr.cinemamovietheatersystem.theaterhall;
+package com.cinemagr.cinemamovietheatersystem.theaterhall;
 
 
-import com.cinemagr.cinemamovietheatersystem.showpiece.Showpiece;
 import com.cinemagr.cinemamovietheatersystem.screening.Screening;
+import com.cinemagr.cinemamovietheatersystem.showpiece.Showpiece;
 
-import java.util.Set;
 import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class TheaterHall extends Showpiece {
 

@@ -1,6 +1,8 @@
-package  com.cinemagr.cinemamovietheatersystem.util;
+package com.cinemagr.cinemamovietheatersystem.util;
 
-import java.lang.reflect.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Arrays;
 
 public class Reflector {

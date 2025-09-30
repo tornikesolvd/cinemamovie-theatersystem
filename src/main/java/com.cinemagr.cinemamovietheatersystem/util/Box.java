@@ -1,4 +1,4 @@
-package  com.cinemagr.cinemamovietheatersystem.util;
+package com.cinemagr.cinemamovietheatersystem.util;
 
 public class Box<T> {
 

@@ -3,10 +3,10 @@ package com.cinemagr.cinemamovietheatersystem;
 import com.cinemagr.cinemamovietheatersystem.annotation.Validate;
 import com.cinemagr.cinemamovietheatersystem.cinema.Cinema;
 import com.cinemagr.cinemamovietheatersystem.exception.BookingServiceException;
-import com.cinemagr.cinemamovietheatersystem.exception.InsufficientFundsException;
+import com.cinemagr.cinemamovietheatersystem.exception.CinemaCapacityExceededException;
 import com.cinemagr.cinemamovietheatersystem.exception.InvalidScreeningException;
 import com.cinemagr.cinemamovietheatersystem.exception.SeatAlreadyOccupiedException;
-import com.cinemagr.cinemamovietheatersystem.exception.CinemaCapacityExceededException;
+import com.cinemagr.cinemamovietheatersystem.exception.InsufficientFundsException;
 import com.cinemagr.cinemamovietheatersystem.identity.Customer;
 import com.cinemagr.cinemamovietheatersystem.identity.Person;
 import com.cinemagr.cinemamovietheatersystem.identity.Staff;
@@ -344,4 +344,4 @@ public class MainClass {
         }
 
     }
-    }
+}

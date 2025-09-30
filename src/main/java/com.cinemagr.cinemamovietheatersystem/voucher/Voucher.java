@@ -1,4 +1,4 @@
-package  com.cinemagr.cinemamovietheatersystem.voucher;
+package com.cinemagr.cinemamovietheatersystem.voucher;
 
 import com.cinemagr.cinemamovietheatersystem.product.Product;
 

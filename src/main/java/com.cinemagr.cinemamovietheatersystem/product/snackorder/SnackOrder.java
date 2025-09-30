@@ -1,20 +1,20 @@
 package com.cinemagr.cinemamovietheatersystem.product.snackorder;
 
 import com.cinemagr.cinemamovietheatersystem.annotation.Validate;
-import com.cinemagr.cinemamovietheatersystem.showpiece.Showpiece;
 import com.cinemagr.cinemamovietheatersystem.product.Snack;
+import com.cinemagr.cinemamovietheatersystem.showpiece.Showpiece;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 public class SnackOrder extends Showpiece {
 
+    @Validate(required = true)
+    private List<Snack> snacks;
+
     {
         System.out.println("SnackOrder instance created (instance initializer)");
     }
-
-    @Validate(required = true)
-    private List<Snack> snacks;
 
     public SnackOrder(List<Snack> snacks) {
         this.snacks = snacks;

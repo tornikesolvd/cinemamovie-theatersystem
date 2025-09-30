@@ -7,14 +7,14 @@ import com.cinemagr.cinemamovietheatersystem.exception.InvalidScreeningException
 import com.cinemagr.cinemamovietheatersystem.exception.SeatAlreadyOccupiedException;
 import com.cinemagr.cinemamovietheatersystem.identity.Customer;
 import com.cinemagr.cinemamovietheatersystem.product.Product;
-import  com.cinemagr.cinemamovietheatersystem.screening.Screening;
+import com.cinemagr.cinemamovietheatersystem.screening.Screening;
 import com.cinemagr.cinemamovietheatersystem.ticket.Ticket;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.ArrayList;
-import java.util.function.Consumer;
+import java.util.List;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class BookingService {
@@ -27,6 +27,15 @@ public class BookingService {
     }
 
     private Payable lastProcessed;
+
+    public static int getBookingCounter() {
+        return bookingCounter;
+    }
+
+    public static void resetCounter() {
+        bookingCounter = 0;
+        System.out.println("Booking counter reset");
+    }
 
     //during booking, customer is main person who books, he also chooses screening and seat where to sit.
     public final Ticket bookTicket(Customer customer, Screening screening, int seatNumber, BigDecimal price)
@@ -89,18 +98,8 @@ public class BookingService {
         this.lastProcessed = payable;
     }
 
-
-    public static int getBookingCounter() {
-        return bookingCounter;
-    }
-
     public void printProductPrice(Product product) {
         System.out.println(product.getName() + " final price: " + product.getFinalPrice());
-    }
-
-    public static void resetCounter() {
-        bookingCounter = 0;
-        System.out.println("Booking counter reset");
     }
 
     // Consumer - Lambda Function

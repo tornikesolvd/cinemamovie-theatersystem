@@ -12,10 +12,6 @@ public enum PaymentMethod {
     BANK_TRANSFER("Bank Transfer", 0.005, true, "Direct bank transfer"),
     CRYPTOCURRENCY("Cryptocurrency", 0.03, true, "Digital currency");
 
-    private final String methodName;
-    private final double feePercentage;
-    private final boolean requiresProcessing;
-    private final String description;
     private static int totalMethods = 0;
 
     static {
@@ -23,11 +19,32 @@ public enum PaymentMethod {
         System.out.println("PaymentMethod enum initialized with " + totalMethods + " methods");
     }
 
+    private final String methodName;
+    private final double feePercentage;
+    private final boolean requiresProcessing;
+    private final String description;
+
     PaymentMethod(String methodName, double feePercentage, boolean requiresProcessing, String description) {
         this.methodName = methodName;
         this.feePercentage = feePercentage;
         this.requiresProcessing = requiresProcessing;
         this.description = description;
+    }
+
+    public static int getTotalMethods() {
+        return totalMethods;
+    }
+
+    public static PaymentMethod getCheapestMethod() {
+        return Arrays.stream(values())
+                .min((m1, m2) -> Double.compare(m1.feePercentage, m2.feePercentage))
+                .orElse(CASH);
+    }
+
+    public static PaymentMethod getMostExpensiveMethod() {
+        return Arrays.stream(values())
+                .max((m1, m2) -> Double.compare(m1.feePercentage, m2.feePercentage))
+                .orElse(CASH);
     }
 
     public String getMethodName() {
@@ -64,22 +81,6 @@ public enum PaymentMethod {
 
     public String getPaymentInfo() {
         return methodName + " (" + (feePercentage * 100) + "% fee) - " + description;
-    }
-
-    public static int getTotalMethods() {
-        return totalMethods;
-    }
-
-    public static PaymentMethod getCheapestMethod() {
-        return Arrays.stream(values())
-                .min((m1, m2) -> Double.compare(m1.feePercentage, m2.feePercentage))
-                .orElse(CASH);
-    }
-
-    public static PaymentMethod getMostExpensiveMethod() {
-        return Arrays.stream(values())
-                .max((m1, m2) -> Double.compare(m1.feePercentage, m2.feePercentage))
-                .orElse(CASH);
     }
 
     public boolean instantPayment() {

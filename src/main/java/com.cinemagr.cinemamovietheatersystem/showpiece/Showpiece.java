@@ -1,4 +1,4 @@
-package  com.cinemagr.cinemamovietheatersystem.showpiece;
+package com.cinemagr.cinemamovietheatersystem.showpiece;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
