@@ -27,19 +27,23 @@ import com.cinemagr.cinemamovietheatersystem.ticket.TicketType;
 import com.cinemagr.cinemamovietheatersystem.util.Box;
 import com.cinemagr.cinemamovietheatersystem.util.Pair;
 import com.cinemagr.cinemamovietheatersystem.voucher.Voucher;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
 public class MainClass {
     public static void main(String[] args) {
-        TheaterHall hall1 = new TheaterHall(1, 3);
+        /* TheaterHall hall1 = new TheaterHall(1, 3);
 
         List<TheaterHall> halls = new ArrayList<>();
         halls.add(hall1);
@@ -341,7 +345,18 @@ public class MainClass {
             System.out.println("Customer count by domain: " + resourceManager.getCustomerCountByDomain());
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } */
+
+        try {
+            String bookFile = FileUtils.readFileToString(new File("src/main/resources/soundOfTale.txt"), StandardCharsets.UTF_8);
+            String[] words = StringUtils.split(bookFile, " \n\t.,;:!?()[]{}\"'");
+            Set<String> uniqueWordsList = new HashSet<>(Arrays.asList(words));
+            FileUtils.writeStringToFile(new File("src/main/resources/uniqueWordsFile.txt"), "Total unique words: " + uniqueWordsList.size(), StandardCharsets.UTF_8);
+            System.out.println("Total unique words: " + uniqueWordsList.size());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
+
 
     }
 }
