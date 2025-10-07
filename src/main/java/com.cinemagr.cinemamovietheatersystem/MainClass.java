@@ -29,6 +29,8 @@ import com.cinemagr.cinemamovietheatersystem.util.Pair;
 import com.cinemagr.cinemamovietheatersystem.voucher.Voucher;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,8 +44,11 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 public class MainClass {
+
+    private static final Logger LOGGER = LogManager.getLogger(MainClass.class);
+
     public static void main(String[] args) {
-        /* TheaterHall hall1 = new TheaterHall(1, 3);
+         TheaterHall hall1 = new TheaterHall(1, 3);
 
         List<TheaterHall> halls = new ArrayList<>();
         halls.add(hall1);
@@ -90,28 +95,28 @@ public class MainClass {
         // right here is demonstrated exception handling with try-catch
         try {
             Ticket ticket1 = bookingService.bookTicket(customer1, screening, 1, new BigDecimal("12.50"));
-            System.out.println("Successfully booked ticket 1: " + ticket1);
+            LOGGER.info("Successfully booked ticket 1: {}", ticket1);
         } catch (BookingServiceException e) {
-            System.err.println("Booking failed: " + e.getMessage());
+            LOGGER.error("Booking failed: {}", e.getMessage());
         } catch (SeatAlreadyOccupiedException e) {
-            System.err.println("Seat already occupied: " + e.getMessage());
+            LOGGER.error("Set Already Occupied: {}", e.getMessage());
         } catch (InvalidScreeningException e) {
-            System.err.println("Invalid screening: " + e.getMessage());
+            LOGGER.error("Invalid screening: {}", e.getMessage());
         } catch (InsufficientFundsException e) {
-            System.err.println("Insufficient funds: " + e.getMessage());
+            LOGGER.error("Insufficient funds: {}", e.getMessage());
         }
 
         try {
             Ticket ticket2 = bookingService.bookTicket(customer2, screening, 2, new BigDecimal("15.70"));
-            System.out.println("Successfully booked ticket 2: " + ticket2);
+            LOGGER.info("Successfully booked ticket 2: {}", ticket2);
         } catch (BookingServiceException e) {
-            System.err.println("Booking failed: " + e.getMessage());
+            LOGGER.error("Booking failed: {}", e.getMessage());
         } catch (SeatAlreadyOccupiedException e) {
-            System.err.println("Seat already occupied: " + e.getMessage());
+            LOGGER.error("Seat already occupied: {}", e.getMessage());
         } catch (InvalidScreeningException e) {
-            System.err.println("Invalid screening: " + e.getMessage());
+            LOGGER.error("Invalid screening: {}", e.getMessage());
         } catch (InsufficientFundsException e) {
-            System.err.println("Insufficient funds: " + e.getMessage());
+            LOGGER.error("Insufficient funds: {}", e.getMessage());
         }
 
         Snack popcorn = new Snack("Popcorn");
@@ -135,7 +140,7 @@ public class MainClass {
         voucher.setPrice(new BigDecimal("20.00"));
 
 
-        System.out.println(" Demonstrating try-with-resources ");
+        LOGGER.info("Demonstrating try-with-resources ");
         try (CinemaResourceManager resourceManager = new CinemaResourceManager(cinema)) {
             resourceManager.addCustomer(customer1);
             resourceManager.addCustomer(customer2);
@@ -147,181 +152,179 @@ public class MainClass {
             resourceManager.addProduct(voucher);
 
 
-            System.out.println(resourceManager.getCinemaInfo());
-            System.out.println("Customer count: " + resourceManager.getCustomerCount());
-            System.out.println("Staff count: " + resourceManager.getStaffCount());
-            System.out.println("Product count: " + resourceManager.getProductCount());
+            LOGGER.info(resourceManager.getCinemaInfo());
+            LOGGER.info("Customer count: " + resourceManager.getCustomerCount());
+            LOGGER.info("Staff count:  " + resourceManager.getStaffCount());
+            LOGGER.info("Product count: " + resourceManager.getProductCount());
 
 
             try {
                 cinema.addCustomer(new Customer("Test Customer"));
-                System.out.println("Added test customer successfully");
+                LOGGER.info("Added test customer successfully");
             } catch (CinemaCapacityExceededException e) {
-                System.err.println("Capacity exceeded: " + e.getMessage());
+                LOGGER.error("Capacity exceeded: {}", e.getMessage());
             }
 
         } catch (IOException e) {
-            System.err.println("Error closing resource manager: " + e.getMessage());
+            LOGGER.error("Error closing resource manager: {}", e.getMessage());
         }
 
-        System.out.println(" Resource manager closed automatically ===");
+        LOGGER.info(" Resource manager closed automatically");
 
         List<Product> products = new ArrayList<>();
         products.add(voucher);
         cinema.setProducts(products);
 
         Ticket directTicket = new Ticket(3, new BigDecimal("15.00"));
-        System.out.println("Demonstrating processPayment: ");
+        LOGGER.info("Demonstrating processPayment: ");
 
         bookingService.processPayment(directTicket);
 
         bookingService.printProductPrice(popcorn);
         bookingService.printProductPrice(voucher);
 
-        System.out.println("Cinema: " + cinema.getName() + " (" + cinema.getLocation() + ")");
-        System.out.println("Movie: " + movie.getTitle() + " (" + movie.getGenre() + ")");
-        System.out.println("Hall: " + hall1.getHallNumber());
-        System.out.println("Screening: " + screening.getMovie().getTitle() + " at " + screening.getTime());
-        System.out.println("Staff: " + staff.getName() + " (" + staff.getRole() + ")");
-        System.out.println("Customers: " + customer1.getName() + ", " + customer2.getName());
-        System.out.println("Generic Person: " + genericPerson.getName());
-        System.out.println("Ticket booked: " + BookingService.getBookingCounter() +
-                ", Direct ticket seat " + directTicket.getSeatNumber() +
-                " ($" + directTicket.getPrice() + ")");
-        System.out.println("Voucher: " + voucher.getName() + " ($" + voucher.getPrice() + ")");
-        System.out.println("Snacks: " + popcorn.getName() + " and " + soda.getName());
-        System.out.println("BookingService Counter: " + BookingService.getBookingCounter());
+        LOGGER.info("Cinema: {} ({})", cinema.getName(), cinema.getLocation());
+        LOGGER.info("Movie: {} ({})", movie.getTitle(), movie.getGenre());
+        LOGGER.info("Hall: {}", hall1.getHallNumber());
+        LOGGER.info("Screening: {} at {}", screening.getMovie().getTitle(), screening.getTime());
+        LOGGER.info("Staff: {} ({})", staff.getName(), staff.getRole());
+        LOGGER.info("Customers: {}, {}", customer1.getName(), customer2.getName());
+        LOGGER.info("Generic Person: {}", genericPerson.getName());
+        LOGGER.info("Ticket booked: {}, Direct ticket seat {} (${})",
+                BookingService.getBookingCounter(), directTicket.getSeatNumber(), directTicket.getPrice());
+        LOGGER.info("Voucher: {} (${})", voucher.getName(), voucher.getPrice());
+        LOGGER.info("Snacks: {} and {}", popcorn.getName(), soda.getName());
+        LOGGER.info("BookingService Counter: {}", BookingService.getBookingCounter());
 
 
         Map<Customer, List<Ticket>> customerTickets = new HashMap<>();
         customerTickets.put(customer1, new ArrayList<>());
         customerTickets.get(customer1).add(new Ticket(10, new BigDecimal("11.00")));
-        System.out.println("Map size: " + customerTickets.size());
+        LOGGER.info("Map size: {}", customerTickets.size());
         boolean mapEmpty = customerTickets.isEmpty();
-        System.out.println("Map empty: " + mapEmpty);
+        LOGGER.info("Map empty: {}", mapEmpty);
         if (customers != null && !customers.isEmpty()) {
             Customer firstCustomer = customers.get(0);
-            System.out.println("First customer: " + firstCustomer.getName());
+            LOGGER.info("First customer: {}", firstCustomer.getName());
         }
         Set<Screening> screenings = hall1.getScreenings();
         if (screenings != null && !screenings.isEmpty()) {
             Screening firstScreening = screenings.iterator().next();
-            System.out.println("First screening movie: " + firstScreening.getMovie().getTitle());
+            LOGGER.info("First  screening movie: {}", firstScreening.getMovie().getTitle());
         }
         if (!customerTickets.isEmpty()) {
             Map.Entry<Customer, List<Ticket>> firstEntry = customerTickets.entrySet().iterator().next();
-            System.out.println("First map key: " + firstEntry.getKey().getName());
+            LOGGER.info("First map value: {}", firstEntry.getValue().get(0).getPrice());
         }
         customers.stream()
                 .map(Customer::getName)
-                .forEach(name -> System.out.println("Iterating list: " + name));
+                .forEach(name -> LOGGER.info("Iterating list: {}", name));
 
         if (screenings != null) {
             screenings.stream()
                     .map(s -> s.getMovie().getTitle())
-                    .forEach(title -> System.out.println("Iterating set: " + title));
+                    .forEach(title -> LOGGER.info("Iterating set: {}", title));
         }
 
         customerTickets.entrySet().stream()
                 .map(e -> e.getKey().getName() + " -> " + e.getValue().size())
-                .forEach(entry -> System.out.println("Iterating map: " + entry));
+                .forEach(entry -> LOGGER.info("Iterating map: {}", entry));
         customerTickets.remove(customer1);
 
         Box<Movie> movieBox = new Box<>(movie);
-        System.out.println("Box empty: " + movieBox.empty());
+        LOGGER.info("Box empty: {}", movieBox.empty());
         Pair<String, Integer> pair = new Pair<>("A", 1);
-        System.out.println("Pair: " + pair.getKey() + ":" + pair.getValue());
+        LOGGER.info("Pair: {}:{}", pair.getKey(), pair.getValue());
 
 
         try {
             bookingService.bookTicket(customer1, screening, 3, new BigDecimal("100.00"));
         } catch (BookingServiceException e) {
-            System.err.println("Booking failed: " + e.getMessage());
+            LOGGER.error("Booking failed: {}", e.getMessage());
         } catch (InsufficientFundsException e) {
-            System.err.println("Insufficient funds: " + e.getMessage());
+            LOGGER.error("Insufficient funds: {}", e.getMessage());
         }
 
         try {
             bookingService.bookTicket(customer2, screening, 1, new BigDecimal("10.00")); // Same seat as ticket1
         } catch (BookingServiceException e) {
-            System.err.println("Booking failed: " + e.getMessage());
+            LOGGER.error("Booking failed", e);
         } catch (SeatAlreadyOccupiedException e) {
-            System.err.println("Seat already occupied: " + e.getMessage());
+            LOGGER.error("Seat already occupied", e);
         }
 
 
         try {
             bookingService.bookTicket(customer1, null, 4, new BigDecimal("15.00"));
         } catch (BookingServiceException e) {
-            System.err.println("Booking failed: " + e.getMessage());
+            LOGGER.error("Booking failed", e);
         } catch (InvalidScreeningException e) {
-            System.err.println("Invalid screening: " + e.getMessage());
+            LOGGER.error("Invalid screening", e);
         }
 
-        System.out.println("Technical Task: Cleaning Theater Hall");
-
+        LOGGER.info("Technical Task: Cleaning Theater Hall");
 
         cinema.technicalTask(() -> {
-            System.out.println("Cleaning projectors");
-            System.out.println("Testing sound systems");
+            LOGGER.info("Cleaning projectors");
+            LOGGER.info("Testing sound systems");
         });
 
         cinema.cleanTheaterHall(hall1, () -> {
-            System.out.println("Vacuuming seats");
-            System.out.println("Wiping down surfaces");
+            LOGGER.info("Vacuuming seats");
+            LOGGER.info("Wiping down surfaces");
         });
 
-        System.out.println("Customer action: ");
+        LOGGER.info("Customer action:");
 
         cinema.applyCustomerAction((customer) -> {
-            System.out.println("Welcome back, " + customer.getName() + "!");
+            LOGGER.info("Welcome back, {}!", customer.getName());
             if (customer.getEmail() != null) {
-                System.out.println("Sending promotional email to: " + customer.getEmail());
+                LOGGER.info("Sending promotional email to: {}", customer.getEmail());
             }
         });
 
-        System.out.println("Full Movie Info: " + movie.getFullMovieInfo());
+        LOGGER.info("Full Movie Info: {}", movie.getFullMovieInfo());
 
-        System.out.println("Staff member: " + staff.getDisplayname());
-        System.out.println("Role description: " + staff.getRoleDescription());
-        System.out.println("Hourly wage: $" + staff.getHourlyWage());
+        LOGGER.info("Staff member: {}", staff.getDisplayname());
+        LOGGER.info("Role description: {}", staff.getRoleDescription());
+        LOGGER.info("Hourly wage: ${}", staff.getHourlyWage());
 
-        System.out.println("Cinema status: " + cinema.getStatusMessage());
-        System.out.println("Requires staff: " + cinema.requiresStaff());
+        LOGGER.info("Cinema status: {}", cinema.getStatusMessage());
+        LOGGER.info("Requires staff: {}", cinema.requiresStaff());
 
         Ticket vipTicket = new Ticket(10, new BigDecimal("25.00"), TicketType.VIP, PaymentMethod.CREDIT_CARD);
-        System.out.println("VIP Ticket Type Info: " + vipTicket.getTicketTypeInfo());
-        System.out.println("Payment Method Info: " + vipTicket.getPaymentMethodInfo());
+        LOGGER.info("VIP Ticket Type Info: {}", vipTicket.getTicketTypeInfo());
+        LOGGER.info("Payment Method Info: {}", vipTicket.getPaymentMethodInfo());
 
-        System.out.println("Reflection ");
 
         String staffClassName = "com.cinemagr.cinemamovietheatersystem.identity.Staff";
         try {
             Class<Staff> staffClass = (Class<Staff>) Class.forName(staffClassName);
 
             for (Field declaredField : staffClass.getDeclaredFields()) {
-                System.out.println("Field: " + declaredField.getName());
+                LOGGER.info("Field: {}", declaredField.getName());
             }
 
             for (Method declaredMethod : staffClass.getDeclaredMethods()) {
-                System.out.println("Method: " + declaredMethod.getName());
+                LOGGER.info("Method: {}", declaredMethod.getName());
             }
 
             Constructor<Staff> staffConstructor = staffClass.getDeclaredConstructor(String.class, StaffRole.class);
             Staff staffReflection = staffConstructor.newInstance("Cashier Cashier", StaffRole.CASHIER);
-            System.out.println("Created staff using reflection: " + staffReflection);
+            LOGGER.info("Created staff using reflection: {} ", staffReflection);
 
             Method getHourlyWageMethod = staffClass.getDeclaredMethod("getHourlyWage");
             Object wage = getHourlyWageMethod.invoke(staffReflection);
-            System.out.println("getHourlyWage using reflection: " + wage);
+            LOGGER.info("getHourlyWage using reflection: {}", wage);
 
 
             for (Field declaredField : staffClass.getDeclaredFields()) {
                 if (declaredField.isAnnotationPresent(Validate.class)) {
                     Validate validateAnnotation = declaredField.getAnnotation(Validate.class);
-                    System.out.println("Found @Validate annotation on field: " + declaredField.getName() +
-                            " with value: " + validateAnnotation.value() +
-                            " (required: " + validateAnnotation.required() + ")");
+                    LOGGER.info("Found @Validate annotation on field: {} with value: {} (required: {})",
+                            declaredField.getName(),
+                            validateAnnotation.value(),
+                            validateAnnotation.required());
                 }
             }
 
@@ -330,8 +333,7 @@ public class MainClass {
             throw new RuntimeException(e);
         }
 
-
-        System.out.println("Streaming Operations");
+        LOGGER.info("Streaming Operations");
 
         try (CinemaResourceManager resourceManager = new CinemaResourceManager(cinema)) {
 
@@ -339,15 +341,15 @@ public class MainClass {
             resourceManager.addCustomer(customer2);
             resourceManager.addStaff(staff);
 
-            System.out.println("All customers names: " + resourceManager.getAllCustomerNames());
-            System.out.println("Customers with email: " + resourceManager.getCustomersWithEmail().size());
-            System.out.println("Staff by role: " + resourceManager.getStaffByRole(StaffRole.CASHIER).size());
-            System.out.println("Customer count by domain: " + resourceManager.getCustomerCountByDomain());
+            LOGGER.info("All customers names: {}", resourceManager.getAllCustomerNames());
+            LOGGER.info("Customers with email: {}", resourceManager.getCustomersWithEmail().size());
+            LOGGER.info("Staff by role: {}", resourceManager.getStaffByRole(StaffRole.CASHIER).size());
+            LOGGER.info("Customer count by domain: {}", resourceManager.getCustomerCountByDomain());
         } catch (IOException e) {
             throw new RuntimeException(e);
-        } */
+        }
 
-        try {
+         /* try {
             String bookFile = FileUtils.readFileToString(new File("src/main/resources/soundOfTale.txt"), StandardCharsets.UTF_8);
             String[] words = StringUtils.split(bookFile, " \n\t.,;:!?()[]{}\"'");
             Set<String> uniqueWordsList = new HashSet<>(Arrays.asList(words));
@@ -356,7 +358,7 @@ public class MainClass {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
+*/
 
     }
 }

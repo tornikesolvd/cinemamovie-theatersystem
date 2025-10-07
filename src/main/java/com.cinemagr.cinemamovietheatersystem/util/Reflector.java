@@ -4,41 +4,43 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Reflector {
 
-    public static void display(Class<?> clazz) {
-        System.out.println(" Class Information: " + clazz.getSimpleName());
+    private static final Logger LOGGER = LogManager.getLogger(Reflector.class);
 
-        System.out.println("Fields: ");
+    public static void display(Class<?> clazz) {
+        LOGGER.info("Class information: {}", clazz.getSimpleName());
+
+        LOGGER.info("Fields: ");
         Arrays.stream(clazz.getDeclaredFields())
                 .forEach(field -> {
-                    System.out.println("Field: " + field.getName());
-                    System.out.println("  Type: " + field.getType().getSimpleName());
-                    System.out.println("  Modifiers: " + Modifier.toString(field.getModifiers()));
-
-                    System.out.println();
+                    LOGGER.debug("Field: {}", field.getName());
+                    LOGGER.debug("  Type: {}", field.getType().getSimpleName());
+                    LOGGER.debug("  Modifiers: {}", Modifier.toString(field.getModifiers()));
+                    LOGGER.debug("");
                 });
 
-        System.out.println("Constructors: ");
+        LOGGER.info("Constructors: ");
         Arrays.stream(clazz.getDeclaredConstructors())
                 .forEach(constructor -> {
-                    System.out.println("Constructor: " + constructor.getName());
-                    System.out.println("  Modifiers: " + Modifier.toString(constructor.getModifiers()));
-                    System.out.println("  Parameters: " + Arrays.toString(constructor.getParameterTypes()));
-
-                    System.out.println();
+                    LOGGER.debug("Constructor: {}", constructor.getName());
+                    LOGGER.debug("Modifiers: {}", Modifier.toString(constructor.getModifiers()));
+                    LOGGER.debug("Parameters: {}", Arrays.toString(constructor.getParameterTypes()));
+                    LOGGER.debug("");
                 });
 
-        System.out.println("Methods: ");
+
+        LOGGER.info("Methods: ");
         Arrays.stream(clazz.getDeclaredMethods())
                 .forEach(method -> {
-                    System.out.println("Method: " + method.getName());
-                    System.out.println("  Return Type: " + method.getReturnType().getSimpleName());
-                    System.out.println("  Modifiers: " + Modifier.toString(method.getModifiers()));
-                    System.out.println("  Parameters: " + Arrays.toString(method.getParameterTypes()));
-
-                    System.out.println();
+                    LOGGER.debug("Method: {}", method.getName());
+                    LOGGER.debug("Return Type: {}", method.getReturnType().getSimpleName());
+                    LOGGER.debug("Modifiers: {}", Modifier.toString(method.getModifiers()));
+                    LOGGER.debug("Parameters: {}", Arrays.toString(method.getParameterTypes()));
+                    LOGGER.debug("");
                 });
     }
 
@@ -52,7 +54,7 @@ public class Reflector {
             constructor.setAccessible(true);
             return constructor.newInstance(args);
         } catch (Exception e) {
-            System.err.println("Error creating object: " + e.getMessage());
+            LOGGER.error("Error creating object {}", e.getMessage());
             return null;
         }
     }
@@ -67,7 +69,7 @@ public class Reflector {
             method.setAccessible(true);
             return method.invoke(obj, args);
         } catch (Exception e) {
-            System.err.println("Error calling method: " + e.getMessage());
+            LOGGER.error("Error calling method: {}", e.getMessage());
             return null;
         }
     }

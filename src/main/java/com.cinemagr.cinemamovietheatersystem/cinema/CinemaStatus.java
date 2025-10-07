@@ -1,5 +1,8 @@
 package com.cinemagr.cinemamovietheatersystem.cinema;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public enum CinemaStatus {
     OPEN("Open", true, "Cinema is operating normally"),
     CLOSED("Closed", false, "Cinema is temporarily closed"),
@@ -10,10 +13,11 @@ public enum CinemaStatus {
     SPECIAL_EVENT("Special Event", true, "Cinema is hosting special event");
 
     private static int totalStatuses = 0;
+    private static final Logger LOGGER = LogManager.getLogger();
 
     static {
         totalStatuses = values().length;
-        System.out.println("CinemaStatus enum initialized with " + totalStatuses + " statuses");
+        LOGGER.debug("CinemaStatus enum initialized with " + totalStatuses + " statuses");
     }
 
     private final String statusName;

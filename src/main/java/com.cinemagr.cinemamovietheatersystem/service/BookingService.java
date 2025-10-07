@@ -9,6 +9,8 @@ import com.cinemagr.cinemamovietheatersystem.identity.Customer;
 import com.cinemagr.cinemamovietheatersystem.product.Product;
 import com.cinemagr.cinemamovietheatersystem.screening.Screening;
 import com.cinemagr.cinemamovietheatersystem.ticket.Ticket;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -17,13 +19,15 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+
 public class BookingService {
 
     private static int bookingCounter;
 
+    private static final Logger LOGGER = LogManager.getLogger(BookingService.class);
     static {
         bookingCounter = 0;
-        System.out.println("BookingService initialized");
+        LOGGER.debug("BookingService initialized");
     }
 
     private Payable lastProcessed;
@@ -34,7 +38,7 @@ public class BookingService {
 
     public static void resetCounter() {
         bookingCounter = 0;
-        System.out.println("Booking counter reset");
+        LOGGER.info("Booking counter reset");
     }
 
     //during booking, customer is main person who books, he also chooses screening and seat where to sit.
@@ -75,8 +79,7 @@ public class BookingService {
             screening.setTickets(existingTickets);
 
             bookingCounter++;
-            System.out.println("Booked seat " + seatNumber + " for " + customer.getName() +
-                    " ($" + price + ")");
+            LOGGER.info("Booked seat {} for {} (${})", seatNumber, customer.getName(), price);
             return ticket;
         } catch (SeatAlreadyOccupiedException | InvalidScreeningException | InsufficientFundsException e) {
 
@@ -84,22 +87,22 @@ public class BookingService {
         } catch (Exception e) {
             throw new BookingServiceException("bookTicket", "Unexpected error during booking", e);
         } finally {
-            System.out.println("Booking attempt finished for customer: " +
-                    (customer != null ? customer.getName() : "Unknown"));
+            LOGGER.info("Booking attempt finished for customer: {}",
+                    customer != null ? customer.getName() : "Unknown");
         }
     }
 
     public void processPayment(Payable payable) {
         if (payable == null) {
-            System.out.println("Nothing to process");
+            LOGGER.info("Nothing to process");
             return;
         }
-        System.out.println("Processing payment: $" + payable.getPrice());
+        LOGGER.info("Processing payment: $" + payable.getPrice());
         this.lastProcessed = payable;
     }
 
     public void printProductPrice(Product product) {
-        System.out.println(product.getName() + " final price: " + product.getFinalPrice());
+        LOGGER.info("Print product price: $" + product.getFinalPrice());
     }
 
     // Consumer - Lambda Function
@@ -111,8 +114,7 @@ public class BookingService {
 
     public void notifyTicketBooking(Ticket ticket) {
         generateTicketAction(ticket, t ->
-                System.out.println("Notification: Seat " + t.getSeatNumber() +
-                        " booked for $" + t.getPrice())
+                LOGGER.info("Notification: Seat {} booked for ${}", t.getSeatNumber(), t.getPrice())
         );
     }
 

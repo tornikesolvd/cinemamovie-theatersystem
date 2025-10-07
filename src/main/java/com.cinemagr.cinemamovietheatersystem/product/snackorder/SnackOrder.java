@@ -3,6 +3,8 @@ package com.cinemagr.cinemamovietheatersystem.product.snackorder;
 import com.cinemagr.cinemamovietheatersystem.annotation.Validate;
 import com.cinemagr.cinemamovietheatersystem.product.Snack;
 import com.cinemagr.cinemamovietheatersystem.showpiece.Showpiece;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -12,8 +14,10 @@ public class SnackOrder extends Showpiece {
     @Validate(required = true)
     private List<Snack> snacks;
 
+
+    private static final Logger LOGGER = LogManager.getLogger(SnackOrder.class);
     {
-        System.out.println("SnackOrder instance created (instance initializer)");
+        LOGGER.debug("SnackOrder instance created (instance initializer)");
     }
 
     public SnackOrder(List<Snack> snacks) {
@@ -44,7 +48,7 @@ public class SnackOrder extends Showpiece {
             }
             return total;
         } finally {
-            System.out.println("SnackOrder total calculated: $" + total);
+            LOGGER.info("SnackOrder total calculated: ${}", total);
         }
     }
 

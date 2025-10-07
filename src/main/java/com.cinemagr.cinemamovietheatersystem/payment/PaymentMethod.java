@@ -1,5 +1,8 @@
 package com.cinemagr.cinemamovietheatersystem.payment;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.math.BigDecimal;
 import java.util.Arrays;
 
@@ -13,10 +16,11 @@ public enum PaymentMethod {
     CRYPTOCURRENCY("Cryptocurrency", 0.03, true, "Digital currency");
 
     private static int totalMethods = 0;
+    private static final Logger LOGGER = LogManager.getLogger(PaymentMethod.class);
 
     static {
         totalMethods = values().length;
-        System.out.println("PaymentMethod enum initialized with " + totalMethods + " methods");
+        LOGGER.debug("PaymentMethod enum initialized with " + totalMethods + " methods");
     }
 
     private final String methodName;

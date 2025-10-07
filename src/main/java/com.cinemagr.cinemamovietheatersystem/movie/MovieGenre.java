@@ -1,5 +1,8 @@
 package com.cinemagr.cinemamovietheatersystem.movie;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Arrays;
 
 public enum MovieGenre {
@@ -13,10 +16,11 @@ public enum MovieGenre {
     ANIMATION("Animation", 6, "Animated features");
 
     private static int totalGenres = 0;
+    private static final Logger LOGGER = LogManager.getLogger(MovieGenre.class);
 
     static {
         totalGenres = values().length;
-        System.out.println("MovieGenre enum initialized with " + totalGenres + " genres");
+        LOGGER.info("MovieGenre enum initialized with " + totalGenres + " genres");
     }
 
     private final String displayName;

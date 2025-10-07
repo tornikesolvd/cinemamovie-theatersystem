@@ -1,5 +1,8 @@
 package com.cinemagr.cinemamovietheatersystem.ticket;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.math.BigDecimal;
 import java.util.Arrays;
 
@@ -13,10 +16,11 @@ public enum TicketType {
     MATINEE("Matinee", new BigDecimal("9.00"), 0.9);
 
     private static int totalTypes = 0;
+    private static final Logger LOGGER = LogManager.getLogger(TicketType.class);
 
     static {
         totalTypes = values().length;
-        System.out.println("TicketType enum initialized with " + totalTypes + " types");
+        LOGGER.debug("TicketType enum initialized with {} types", totalTypes);
     }
 
     private final String typeName;

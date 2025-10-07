@@ -14,15 +14,18 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class CinemaResourceManager implements AutoCloseable {
-
+    private static final Logger LOGGER = LogManager.getLogger(CinemaResourceManager.class);
     private final Cinema cinema;
     private boolean closed = false;
 
+
     public CinemaResourceManager(Cinema cinema) {
         this.cinema = cinema;
-        System.out.println("CinemaResourceManager initialized for: " + cinema.getName());
+        LOGGER.info("CinemaResourceManager initialized for: " + cinema.getName());
     }
 
     public void addCustomer(Customer customer) {
@@ -36,7 +39,7 @@ public class CinemaResourceManager implements AutoCloseable {
             cinema.setCustomers(existingCustomers);
         }
         existingCustomers.add(customer);
-        System.out.println("Added customer: " + customer.getName());
+        LOGGER.info("Added customer: " + customer.getName());
     }
 
     public void addStaff(Staff staff) {
@@ -50,7 +53,7 @@ public class CinemaResourceManager implements AutoCloseable {
             cinema.setStaffMembers(existingStaff);
         }
         existingStaff.add(staff);
-        System.out.println("Added staff member: " + staff.getName());
+        LOGGER.info("Added staff member: " + staff.getName());
     }
 
     public void addProduct(Product product) {
@@ -64,7 +67,7 @@ public class CinemaResourceManager implements AutoCloseable {
             cinema.setProducts(existingProducts);
         }
         existingProducts.add(product);
-        System.out.println("Added product: " + product.getName());
+        LOGGER.info("Added product: " + product.getName());
     }
 
 
@@ -248,21 +251,19 @@ public class CinemaResourceManager implements AutoCloseable {
 
     public void displayCinemaStatus() {
         performCinemaOperation(cinema -> {
-            System.out.println("=== Cinema Status ===");
-            System.out.println("Name: " + cinema.getName());
-            System.out.println("Location: " + cinema.getLocation());
-            System.out.println("Total Capacity: " + cinema.getTotalCapacity());
+            LOGGER.info("=== Cinema Status ===");
+            LOGGER.info("Name: {}", cinema.getName());
+            LOGGER.info("Location: {}", cinema.getLocation());
+            LOGGER.info("Total Capacity: {}", cinema.getTotalCapacity());
         });
     }
 
     @Override
     public void close() throws IOException {
         if (!closed) {
-            System.out.println("Closing CinemaResourceManager for: " + cinema.getName());
-            System.out.println("Final counts - Customers: " + getCustomerCount() +
-                    ", Staff: " + getStaffCount() +
-                    ", Products: " + getProductCount());
-            closed = true;
+            LOGGER.info("Closing CinemaResourceManager for: {}", cinema.getName());
+            LOGGER.info("Final counts - Customers: {}, Staff: {}, Products: {}",
+                    getCustomerCount(), getStaffCount(), getProductCount());
         }
     }
 }

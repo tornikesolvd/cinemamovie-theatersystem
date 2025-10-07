@@ -1,5 +1,6 @@
 package com.cinemagr.cinemamovietheatersystem.cinema;
 
+import com.cinemagr.cinemamovietheatersystem.MainClass;
 import com.cinemagr.cinemamovietheatersystem.contract.CustomerAction;
 import com.cinemagr.cinemamovietheatersystem.exception.CinemaCapacityExceededException;
 import com.cinemagr.cinemamovietheatersystem.identity.Customer;
@@ -7,6 +8,8 @@ import com.cinemagr.cinemamovietheatersystem.identity.Staff;
 import com.cinemagr.cinemamovietheatersystem.product.Product;
 import com.cinemagr.cinemamovietheatersystem.showpiece.Showpiece;
 import com.cinemagr.cinemamovietheatersystem.theaterhall.TheaterHall;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +17,7 @@ import java.util.List;
 
 public class Cinema extends Showpiece {
 
+    private static final Logger LOGGER = LogManager.getLogger(Cinema.class);
     private String name;
     private String location;
     private List<TheaterHall> halls;
@@ -113,20 +117,20 @@ public class Cinema extends Showpiece {
     }
 
     public void technicalTask(Runnable maintenanceTask) {
-        System.out.println("Executing maintenance task at " + name);
+        LOGGER.info("Executing maintenance task at {}", name);
         maintenanceTask.run();
     }
 
 
     public void cleanTheaterHall(TheaterHall hall, Runnable cleaningTask) {
-        System.out.println("Starting cleaning of hall " + hall.getId() + " at " + name);
+        LOGGER.info("Starting cleaning of hall {} at {}", hall.getId(), name);
         cleaningTask.run();
-        System.out.println("Cleaning completed for hall " + hall.getId() + " at " + name);
+        LOGGER.info("Cleaning completed for hall {} at {}", hall.getId(), name);
     }
 
     public void applyCustomerAction(CustomerAction customerAction) {
         if (customers != null) {
-            System.out.println("Applying action to " + customers.size() + " customers at " + name);
+            LOGGER.info("Applying action to {} customers at {}", customers.size(), name);
             customers.stream()
                     .forEach(customerAction::execute);
         }
@@ -145,7 +149,7 @@ public class Cinema extends Showpiece {
     }
 
     public void changeStatus(CinemaStatus newStatus) {
-        System.out.println("Changing cinema status from " + this.status + " to " + newStatus);
+        LOGGER.info("Changing cinema status from {} to {}", this.status, newStatus);
         this.status = newStatus;
     }
 

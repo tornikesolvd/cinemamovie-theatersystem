@@ -4,12 +4,15 @@ import com.cinemagr.cinemamovietheatersystem.contract.Bookable;
 import com.cinemagr.cinemamovietheatersystem.contract.Payable;
 import com.cinemagr.cinemamovietheatersystem.payment.PaymentMethod;
 import com.cinemagr.cinemamovietheatersystem.showpiece.Showpiece;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.util.Objects;
 
 public final class Ticket extends Showpiece implements Bookable, Payable {
 
+    private static final Logger LOGGER = LogManager.getLogger(Ticket.class);
     private static int counter = 1000;
 
     private final int seatNumber;
@@ -117,21 +120,23 @@ public final class Ticket extends Showpiece implements Bookable, Payable {
     @Override
     public void book() {
         this.occupied = true;
-        System.out.println("Booked ticket seat: " + seatNumber);
+        LOGGER.info("Booked ticket seat: {}", seatNumber);
     }
 
     public boolean processPayment(BigDecimal price) {
         if (price == null || price.compareTo(BigDecimal.ZERO) <= 0) {
-            System.out.println("Invalid payment amount for seat " + seatNumber);
+            LOGGER.info("Invalid payment amount for seat " + seatNumber);
             return false;
         }
 
         BigDecimal totalAmount = paymentMethod != null ? paymentMethod.getTotalAmount(price) : price;
-        System.out.println("Processing payment of $" + totalAmount + " for ticket at seat " + seatNumber +
-                " using " + (paymentMethod != null ? paymentMethod.getMethodName() : "Unknown method"));
+        LOGGER.info("Processing payment of ${} for ticket at seat {} using {}",
+                totalAmount,
+                seatNumber,
+                paymentMethod != null ? paymentMethod.getMethodName() : "Unknown method");
 
         if (paymentMethod != null && paymentMethod.requiresProcessing()) {
-            System.out.println("Payment processing fee: $" + paymentMethod.calculateFee(price));
+            LOGGER.info("Payment processing fee: ${}", paymentMethod.calculateFee(price));
         }
 
         return true;
