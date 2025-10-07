@@ -6,6 +6,8 @@ import com.cinemagr.cinemamovietheatersystem.identity.Staff;
 import com.cinemagr.cinemamovietheatersystem.identity.StaffRole;
 import com.cinemagr.cinemamovietheatersystem.product.Product;
 import com.cinemagr.cinemamovietheatersystem.product.Snack;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -14,8 +16,6 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class CinemaResourceManager implements AutoCloseable {
     private static final Logger LOGGER = LogManager.getLogger(CinemaResourceManager.class);

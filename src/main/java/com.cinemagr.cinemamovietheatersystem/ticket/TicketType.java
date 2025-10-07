@@ -15,8 +15,8 @@ public enum TicketType {
     PREMIUM("Premium", new BigDecimal("35.00"), 2.0),
     MATINEE("Matinee", new BigDecimal("9.00"), 0.9);
 
-    private static int totalTypes = 0;
     private static final Logger LOGGER = LogManager.getLogger(TicketType.class);
+    private static int totalTypes = 0;
 
     static {
         totalTypes = values().length;

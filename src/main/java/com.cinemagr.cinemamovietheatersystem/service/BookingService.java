@@ -22,9 +22,9 @@ import java.util.function.Function;
 
 public class BookingService {
 
+    private static final Logger LOGGER = LogManager.getLogger(BookingService.class);
     private static int bookingCounter;
 
-    private static final Logger LOGGER = LogManager.getLogger(BookingService.class);
     static {
         bookingCounter = 0;
         LOGGER.debug("BookingService initialized");

@@ -2,11 +2,7 @@ package com.cinemagr.cinemamovietheatersystem;
 
 import com.cinemagr.cinemamovietheatersystem.annotation.Validate;
 import com.cinemagr.cinemamovietheatersystem.cinema.Cinema;
-import com.cinemagr.cinemamovietheatersystem.exception.BookingServiceException;
-import com.cinemagr.cinemamovietheatersystem.exception.CinemaCapacityExceededException;
-import com.cinemagr.cinemamovietheatersystem.exception.InvalidScreeningException;
-import com.cinemagr.cinemamovietheatersystem.exception.SeatAlreadyOccupiedException;
-import com.cinemagr.cinemamovietheatersystem.exception.InsufficientFundsException;
+import com.cinemagr.cinemamovietheatersystem.exception.*;
 import com.cinemagr.cinemamovietheatersystem.identity.Customer;
 import com.cinemagr.cinemamovietheatersystem.identity.Person;
 import com.cinemagr.cinemamovietheatersystem.identity.Staff;
@@ -27,18 +23,14 @@ import com.cinemagr.cinemamovietheatersystem.ticket.TicketType;
 import com.cinemagr.cinemamovietheatersystem.util.Box;
 import com.cinemagr.cinemamovietheatersystem.util.Pair;
 import com.cinemagr.cinemamovietheatersystem.voucher.Voucher;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -48,7 +40,7 @@ public class MainClass {
     private static final Logger LOGGER = LogManager.getLogger(MainClass.class);
 
     public static void main(String[] args) {
-         TheaterHall hall1 = new TheaterHall(1, 3);
+        TheaterHall hall1 = new TheaterHall(1, 3);
 
         List<TheaterHall> halls = new ArrayList<>();
         halls.add(hall1);

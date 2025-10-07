@@ -1,6 +1,5 @@
 package com.cinemagr.cinemamovietheatersystem.cinema;
 
-import com.cinemagr.cinemamovietheatersystem.MainClass;
 import com.cinemagr.cinemamovietheatersystem.contract.CustomerAction;
 import com.cinemagr.cinemamovietheatersystem.exception.CinemaCapacityExceededException;
 import com.cinemagr.cinemamovietheatersystem.identity.Customer;

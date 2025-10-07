@@ -11,11 +11,10 @@ import java.util.List;
 
 public class SnackOrder extends Showpiece {
 
+    private static final Logger LOGGER = LogManager.getLogger(SnackOrder.class);
     @Validate(required = true)
     private List<Snack> snacks;
 
-
-    private static final Logger LOGGER = LogManager.getLogger(SnackOrder.class);
     {
         LOGGER.debug("SnackOrder instance created (instance initializer)");
     }

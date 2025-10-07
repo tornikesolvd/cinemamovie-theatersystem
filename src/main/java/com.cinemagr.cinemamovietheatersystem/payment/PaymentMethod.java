@@ -15,8 +15,8 @@ public enum PaymentMethod {
     BANK_TRANSFER("Bank Transfer", 0.005, true, "Direct bank transfer"),
     CRYPTOCURRENCY("Cryptocurrency", 0.03, true, "Digital currency");
 
-    private static int totalMethods = 0;
     private static final Logger LOGGER = LogManager.getLogger(PaymentMethod.class);
+    private static int totalMethods = 0;
 
     static {
         totalMethods = values().length;

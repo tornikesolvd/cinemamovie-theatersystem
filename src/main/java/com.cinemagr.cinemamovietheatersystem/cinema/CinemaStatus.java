@@ -12,8 +12,8 @@ public enum CinemaStatus {
     RENOVATION("Renovation", false, "Cinema is being renovated"),
     SPECIAL_EVENT("Special Event", true, "Cinema is hosting special event");
 
-    private static int totalStatuses = 0;
     private static final Logger LOGGER = LogManager.getLogger();
+    private static int totalStatuses = 0;
 
     static {
         totalStatuses = values().length;

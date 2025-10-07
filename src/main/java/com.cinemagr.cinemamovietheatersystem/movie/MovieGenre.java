@@ -15,8 +15,8 @@ public enum MovieGenre {
     THRILLER("Thriller", 16, "Suspenseful plots"),
     ANIMATION("Animation", 6, "Animated features");
 
-    private static int totalGenres = 0;
     private static final Logger LOGGER = LogManager.getLogger(MovieGenre.class);
+    private static int totalGenres = 0;
 
     static {
         totalGenres = values().length;
