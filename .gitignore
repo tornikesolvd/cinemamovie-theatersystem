@@ -15,6 +15,20 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
+# Build folders
+out/
+target/
+build/
+bin/
+
+# Logs
+logs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
