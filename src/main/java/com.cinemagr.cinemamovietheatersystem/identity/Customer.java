@@ -11,7 +11,6 @@ public class Customer extends Person {
     private List<SnackOrder> orders;
     private String name="solvd";
 
-
     //as customer is person and extends Person class, therefore customer should have name as obligatory field, but not registration date or orders because customer can not be registered and does not have any orders but stil attend cinema.
     public Customer(String name) {
         super(name);
