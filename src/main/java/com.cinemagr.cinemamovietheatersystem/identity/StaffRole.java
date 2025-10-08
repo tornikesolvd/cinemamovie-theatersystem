@@ -1,9 +1,14 @@
 package com.cinemagr.cinemamovietheatersystem.identity;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.math.BigDecimal;
 import java.util.Arrays;
 
 public enum StaffRole {
+
+    
     MANAGER("Manager", new BigDecimal("25.00"), 8, "Oversees cinema operations"),
     CASHIER("Cashier", new BigDecimal("15.00"), 6, "Handles ticket sales"),
     USHER("Usher", new BigDecimal("12.00"), 4, "Assists customers and maintains order"),
@@ -14,10 +19,11 @@ public enum StaffRole {
     PROJECTIONIST("Projectionist", new BigDecimal("16.00"), 6, "Manages movie projection");
 
     private static int totalRoles = 0;
+    private static final Logger LOGGER = LogManager.getLogger(StaffRole.class);
 
     static {
         totalRoles = values().length;
-        System.out.println("StaffRole enum initialized with " + totalRoles + " roles");
+        LOGGER.info("StaffRole enum initialized with {} roles", totalRoles);
     }
 
     private final String roleName;

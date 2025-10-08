@@ -320,7 +320,7 @@ public class MainClass {
                 }
             }
 
-            System.out.println();
+            LOGGER.info("");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -346,7 +346,7 @@ public class MainClass {
             String[] words = StringUtils.split(bookFile, " \n\t.,;:!?()[]{}\"'");
             Set<String> uniqueWordsList = new HashSet<>(Arrays.asList(words));
             FileUtils.writeStringToFile(new File("src/main/resources/uniqueWordsFile.txt"), "Total unique words: " + uniqueWordsList.size(), StandardCharsets.UTF_8);
-            System.out.println("Total unique words: " + uniqueWordsList.size());
+            LOGGER.info("Total unique words: {}", uniqueWordsList.size());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
