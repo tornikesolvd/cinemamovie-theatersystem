@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 
 public enum StaffRole {
-
     
     MANAGER("Manager", new BigDecimal("25.00"), 8, "Oversees cinema operations"),
     CASHIER("Cashier", new BigDecimal("15.00"), 6, "Handles ticket sales"),

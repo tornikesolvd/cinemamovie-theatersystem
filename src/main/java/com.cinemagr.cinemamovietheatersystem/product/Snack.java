@@ -15,7 +15,7 @@ public class Snack extends Product implements Consumable {
     }
 
     @Override
-    public BigDecimal getFinalPrice() {
+    public BigDecimal getFinalPrice()  {
         return price;
     }
 
