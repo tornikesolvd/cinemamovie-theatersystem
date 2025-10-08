@@ -1,10 +1,14 @@
 package com.cinemagr.cinemamovietheatersystem.product;
 
 import com.cinemagr.cinemamovietheatersystem.contract.Consumable;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 
 public class Snack extends Product implements Consumable {
+
+    private static final Logger LOGGER = LogManager.getLogger(Snack.class);
 
     public Snack(String name) {
         super(name);
@@ -17,6 +21,6 @@ public class Snack extends Product implements Consumable {
 
     @Override
     public void consume() {
-        System.out.println("Enjoy your " + name + "!");
+        LOGGER.info("Enjoy your {}!", name);
     }
 }
