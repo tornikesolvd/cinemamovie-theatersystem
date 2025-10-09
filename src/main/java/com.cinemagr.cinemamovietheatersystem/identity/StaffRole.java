@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 
 public enum StaffRole {
-    
+
     MANAGER("Manager", new BigDecimal("25.00"), 8, "Oversees cinema operations"),
     CASHIER("Cashier", new BigDecimal("15.00"), 6, "Handles ticket sales"),
     USHER("Usher", new BigDecimal("12.00"), 4, "Assists customers and maintains order"),
@@ -17,8 +17,8 @@ public enum StaffRole {
     CONCESSION_WORKER("Concession Worker", new BigDecimal("13.00"), 4, "Sells snacks and drinks"),
     PROJECTIONIST("Projectionist", new BigDecimal("16.00"), 6, "Manages movie projection");
 
-    private static int totalRoles = 0;
     private static final Logger LOGGER = LogManager.getLogger(StaffRole.class);
+    private static int totalRoles = 0;
 
     static {
         totalRoles = values().length;

@@ -16,24 +16,24 @@ public class Connection {
         this.connectionId = connectionId;
     }
 
-    public void create(String account){
-        LOGGER.info("Creating {} connection with account {} ",  connectionId, account);
+    public void create(String account) {
+        LOGGER.info("Creating {} connection with account {} ", connectionId, account);
         database.add(account);
     }
 
-    public String get(int index){
+    public String get(int index) {
         LOGGER.info("Connection {} get {}", connectionId, index);
-        return index <  database.size() ? database.get(index) : null;
+        return index < database.size() ? database.get(index) : null;
     }
 
-    public void update (int index, String account){
-        LOGGER.info("Updating {} connection with account {} ",  connectionId, account);
-        if(index < database.size()){
-            database.set(index,account);
+    public void update(int index, String account) {
+        LOGGER.info("Updating {} connection with account {} ", connectionId, account);
+        if (index < database.size()) {
+            database.set(index, account);
         }
     }
 
-    public void delete(int index){
+    public void delete(int index) {
         LOGGER.info("Connection {} deleting {}", connectionId, index);
         if (index < database.size()) {
             database.remove(index);
@@ -41,7 +41,7 @@ public class Connection {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Connection " + connectionId;
     }
 }

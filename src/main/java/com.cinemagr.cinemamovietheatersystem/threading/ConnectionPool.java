@@ -27,14 +27,14 @@ public class ConnectionPool {
         return INSTANCE;
     }
 
-    public Connection getConnection() throws InterruptedException{
-        LOGGER.info("[{}] Awaiting connection...",Thread.currentThread().getName());
+    public Connection getConnection() throws InterruptedException {
+        LOGGER.info("[{}] Awaiting connection...", Thread.currentThread().getName());
         Connection connection = connections.take();
         LOGGER.info("[{}] Established connection {}", Thread.currentThread().getName(), connection);
         return connection;
     }
 
-    public void releaseConnection(Connection connection){
+    public void releaseConnection(Connection connection) {
         connections.offer(connection);
         LOGGER.info("[{}] Released connection {}", Thread.currentThread().getName(), connection);
     }
