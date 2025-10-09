@@ -8,7 +8,7 @@ public class ThreadMain {
     private static final Logger LOGGER = LogManager.getLogger(ThreadMain.class);
 
     public static void main(String[] args) {
-        ConnectionPool pool = ConnectionPool.getINSTANCE(5);
+        ConnectionPool pool = ConnectionPool.getInstance(5);
         LOGGER.info("Connection pool is ready");
 
         Thread t1 = new Thread(new ConnectionTaskRunnable(pool));

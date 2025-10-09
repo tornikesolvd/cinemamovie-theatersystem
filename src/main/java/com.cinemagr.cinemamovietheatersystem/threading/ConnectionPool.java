@@ -20,7 +20,7 @@ public class ConnectionPool {
         LOGGER.info("Connection pool size {}", connectionSize);
     }
 
-    public static synchronized ConnectionPool getINSTANCE(int connectionSize) {
+    public static synchronized ConnectionPool getInstance(int connectionSize) {
         if (INSTANCE == null) {
             INSTANCE = new ConnectionPool(connectionSize);
         }
